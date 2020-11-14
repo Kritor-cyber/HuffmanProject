@@ -2,4 +2,4 @@
 
 #include <stdlib.h>
 
-void PrintErrorMessageFromErrorCode(errno_t err);
+void PrintErrorMessageFromErrorCodeFromFile(errno_t err);
