@@ -3,6 +3,9 @@
 
 #include "StringManipulation.h"
 #include "FileManipulation.h"
+#include "Structures/ListCharAndNbOcc.h"
+
+#define DEBUG 1
 
 int main(int argc, char* argv[])
 {
@@ -34,6 +37,23 @@ int main(int argc, char* argv[])
 		printf("There are %d char in %s\n", GetNumberCharInFile(binaryFile), binaryFile);
 	
 	free(binaryFile);
+
+	ListCharAndNbOcc* list = GetListCharAndNbOccFromFile(argv[1]);
+
+	if (list == NULL)
+	{
+		printf("file is empty or an eeror occurred\n");
+	}
+	else
+	{
+		if (DEBUG)
+		{
+			PrintList(list);
+			SortListCharAndNbOccCroissant(&list);
+			PrintList(list);
+			FreeList(list);
+		}
+	}
 
 	return 0;
 }
