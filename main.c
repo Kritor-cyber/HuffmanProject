@@ -4,6 +4,7 @@
 #include "StringManipulation.h"
 #include "FileManipulation.h"
 #include "Structures/ListCharAndNbOcc.h"
+#include "Structures/NodeHuffman.h"
 
 #define DEBUG 1
 
@@ -49,9 +50,13 @@ int main(int argc, char* argv[])
 		if (DEBUG)
 		{
 			PrintList(list);
-			SortListCharAndNbOccCroissant(&list);
+			NodeHuffman* huffmanTree = CreateHuffmanTree(list);
 			PrintList(list);
+			PrintHuffmanTree(huffmanTree);
 			FreeList(list);
+			list = NULL;
+			FreeHuffmanTree(huffmanTree);
+			huffmanTree = NULL;
 		}
 	}
 
