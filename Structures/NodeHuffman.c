@@ -173,6 +173,7 @@ void WriteDictionnary(NodeHuffman* tree)
 		{
 			_WriteDictionnary(tree, "", dic);
 			printf("Dictionnary writing finished...\n");
+			fclose(dic);
 		}
 	}
 }
