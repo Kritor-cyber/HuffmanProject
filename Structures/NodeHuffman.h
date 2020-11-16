@@ -12,5 +12,8 @@ typedef struct NodeHuffman
 
 NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc* list);
 NodeHuffman* NodeHuffmanFromNodeCharAndNbOcc(ListCharAndNbOcc* list);
+
+void WriteDictionnary(NodeHuffman* tree);
+
 void PrintHuffmanTree(NodeHuffman* tree);
 void FreeHuffmanTree(NodeHuffman* tree);

@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
 			NodeHuffman* huffmanTree = CreateHuffmanTree(list);
 			PrintList(list);
 			PrintHuffmanTree(huffmanTree);
+			WriteDictionnary(huffmanTree);
 			FreeList(list);
 			list = NULL;
 			FreeHuffmanTree(huffmanTree);
