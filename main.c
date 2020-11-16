@@ -5,6 +5,8 @@
 #include "FileManipulation.h"
 #include "Structures/ListCharAndNbOcc.h"
 #include "Structures/NodeHuffman.h"
+#include "Encoding.h"
+#include "Dictionnary.h"
 
 #define DEBUG 1
 
@@ -19,10 +21,10 @@ int main(int argc, char* argv[])
 	}
 
 
-	printf("Gonna convert \"Alice.txt\" into binary...\n");
+	printf("Gonna convert \"%s\" into binary...\n", argv[1]);
 
 	ConvertFileFromASCIIToBinary(argv[1]);
-	printf("\"Alice.txt\" into binary convertion finished...\n");
+	printf("\"%s\" into binary convertion finished...\n", argv[1]);
 
 	char* binaryFile = AddStringBeforeExtensionOfFileName(argv[1], "_binary");
 	int nbCharInFile = GetNumberCharInFile(argv[1]);
@@ -53,6 +55,30 @@ int main(int argc, char* argv[])
 			NodeHuffman* huffmanTree = CreateHuffmanTree(list);
 			PrintList(list);
 			PrintHuffmanTree(huffmanTree);
+			WriteDictionnary(huffmanTree);
+
+			
+			FILE* dic = NULL;
+			errno_t err = fopen_s(&dic, "dico.txt", "r");
+
+			if (err || dic == NULL)
+			{
+				printf("There is an error while opening the dictionnary\n");
+			}
+			else
+			{
+				char* pathOfFileCompressed = AddStringBeforeExtensionOfFileName(argv[1], "_compressed");
+				if (pathOfFileCompressed == NULL)
+				{
+					printf("Error while allocating memory to pathOfFileCompressed\n");
+				}
+				else
+				{
+					EncodeFile(argv[1], pathOfFileCompressed, dic);
+					free(pathOfFileCompressed);
+				}
+			}
+
 			FreeList(list);
 			list = NULL;
 			FreeHuffmanTree(huffmanTree);

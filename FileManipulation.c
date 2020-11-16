@@ -6,7 +6,7 @@
 #include "StringManipulation.h"
 #include "Utilities.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 void ConvertFileFromASCIIToBinary(char* path)
 {

@@ -1,8 +1,11 @@
 #include "NodeHuffman.h"
 
 #include "ListHuffman.h"
+#include "../Utilities.h"
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc *list)
 {
@@ -102,6 +105,77 @@ NodeHuffman* NodeHuffmanFromNodeCharAndNbOcc(ListCharAndNbOcc* list)
 	}
 
 	return node;
+}
+
+void _WriteDictionnary(NodeHuffman* tree, const char* code, FILE *dic)
+{
+	if (tree->c != NULL)
+	{
+		if (fprintf_s(dic, "%c : %s\n", tree->c, code) < 0)
+		{
+			printf("Error while writing in dico.txt\n\n");
+		}
+	}
+	else
+	{
+		int size = strlen(code);
+		if (size < 0)
+		{
+			printf("error to get the size of the string \"%s\"\n\n", code);
+		}
+		else
+		{
+			size += 2;
+			char* nextCode = (char*)malloc(sizeof(char) * (size));
+			if (nextCode == NULL)
+			{
+				printf("Can't allocate memory to next code in WriteDictionnary\n\n");
+			}
+			else
+			{
+				errno_t err = strcpy_s(nextCode, size, code);
+				if (err)
+				{
+					printf("Error while copiing the old code in a new string\n\n");
+				}
+				else
+				{
+					nextCode[size - 1] = '\0';
+					nextCode[size - 2] = '0';
+					_WriteDictionnary(tree->left, nextCode, dic);
+					nextCode[size - 2] = '1';
+					_WriteDictionnary(tree->right, nextCode, dic);
+				}
+				free(nextCode);
+			}
+		}
+	}
+}
+
+void WriteDictionnary(NodeHuffman* tree)
+{
+	printf("\nWriting dictionnary...\n");
+	if (tree == NULL)
+	{
+		printf("The dictionnary can't be write if he is empty\n");
+	}
+	else
+	{
+		FILE *dic = NULL;
+		errno_t err = fopen_s(&dic, "dico.txt", "w");
+
+		if (err || dic == NULL)
+		{
+			printf("Error while opening dico.txt\n");
+			PrintErrorMessageFromErrorCodeFromFile(err);
+		}
+		else
+		{
+			_WriteDictionnary(tree, "", dic);
+			printf("Dictionnary writing finished...\n");
+			fclose(dic);
+		}
+	}
 }
 
 void PrintHuffmanTree(NodeHuffman* tree)
