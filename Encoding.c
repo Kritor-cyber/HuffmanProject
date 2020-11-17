@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "Dictionnary.h"
 #include "Utilities.h"
 
 void GetCharCodeFromDic(FILE* dic, char c, char* code)

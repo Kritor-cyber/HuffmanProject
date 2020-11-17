@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "Utilities.h"
 
+#define DEBUG 0
+
 int GetMaxCodeSize()
 {
 	FILE* f = NULL;
@@ -28,10 +30,10 @@ int GetMaxCodeSize()
 			cp = 0;
 			while ((c = fgetc(f)) != '\n' && c != EOF)
 			{
-				printf("%c", c);
+				if (DEBUG) printf("%c", c);
 				cp++;
 			}
-			printf("\n");
+			if (DEBUG) printf("\n");
 			if (cp > max)
 				max = cp;
 		}
