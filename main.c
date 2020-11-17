@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 				{
 					printf("Encoding %s\n", argv[1]);
 					EncodeFile(argv[1], pathOfFileCompressed, dic);
-					printf("Encoding finished\n", argv[1]);
+					printf("Encoding finished\n");
 
 					char* pathOfFileDecompressed = AddStringBeforeExtensionOfFileName(argv[1], "_decompressed");
 					if (pathOfFileDecompressed == NULL)
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 					{
 						printf("Decoding %s\n", pathOfFileCompressed);
 						DecodeFromTree(pathOfFileCompressed, pathOfFileDecompressed, huffmanTree);
-						printf("Decoding finished\n", pathOfFileCompressed);
+						printf("Decoding finished\n");
 						free(pathOfFileDecompressed);
 					}
 
