@@ -4,10 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "StringManipulation.h"
-#include "ListCharAndNbOcc.h"
 #include "Utilities.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 void ConvertFileFromASCIIToBinary(char* path)
 {
@@ -90,4 +89,39 @@ int GetNumberCharInFile(char* path)
 	}
 
 	return nbCharInFile;
+}
+
+ListCharAndNbOcc* GetListCharAndNbOccFromFile(char* path)
+{
+	FILE* fileToRead;
+	errno_t err = fopen_s(&fileToRead, path, "r");
+
+	if (DEBUG) printf("chemin vers le fichier a ouvrir : %s\n", path);
+
+	if (err || fileToRead == NULL)
+	{
+		printf("Can't open file \"%s\"\n", path);
+
+		PrintErrorMessageFromErrorCodeFromFile(err);
+
+		return NULL;
+	}
+	else
+	{
+		char c;
+		ListCharAndNbOcc* list = NULL;
+		while ((c = getc(fileToRead)) != EOF)
+		{
+			AddCharToList(&list, c);
+		}
+
+		fclose(fileToRead);
+
+		if (list != NULL)
+		{
+			return list;
+		}
+	}
+
+	return NULL;
 }
