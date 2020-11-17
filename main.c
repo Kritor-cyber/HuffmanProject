@@ -6,6 +6,7 @@
 #include "Structures/ListCharAndNbOcc.h"
 #include "Structures/NodeHuffman.h"
 #include "Encoding.h"
+#include "Decoding.h"
 #include "Dictionnary.h"
 
 #define DEBUG 1
@@ -74,7 +75,23 @@ int main(int argc, char* argv[])
 				}
 				else
 				{
+					printf("Encoding %s\n", argv[1]);
 					EncodeFile(argv[1], pathOfFileCompressed, dic);
+					printf("Encoding finished\n", argv[1]);
+
+					char* pathOfFileDecompressed = AddStringBeforeExtensionOfFileName(argv[1], "_decompressed");
+					if (pathOfFileDecompressed == NULL)
+					{
+						printf("Error while allocating memory to pathOfFileCompressed\n");
+					}
+					else
+					{
+						printf("Decoding %s\n", pathOfFileCompressed);
+						DecodeFromTree(pathOfFileCompressed, pathOfFileDecompressed, huffmanTree);
+						printf("Decoding finished\n", pathOfFileCompressed);
+						free(pathOfFileDecompressed);
+					}
+
 					free(pathOfFileCompressed);
 				}
 			}
