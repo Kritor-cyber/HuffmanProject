@@ -6,7 +6,7 @@ NodeHuffman* createNodeHuffman(char car)
     new_node = (NodeHuffman*)malloc(sizeof(NodeHuffman));
 
     if (new_node == NULL)
-        printf("can’t allocate memory to NodeHuffman in createNodeHuffman()\n");
+        printf("canâ€™t allocate memory to NodeHuffman in createNodeHuffman()\n");
     else {
         new_node->c = car;
         new_node->nbOcc = 1;
@@ -40,7 +40,7 @@ NodeHuffman** OccurOpti(FILE* f, int* sizeTab)
     fseek(f, 0, SEEK_SET);
 
     if (tab == NULL)
-        printf("can’t allocate memory to array NodeHuffman in OccurOpti()\n");
+        printf("canâ€™t allocate memory to array NodeHuffman in OccurOpti()\n");
     else {
         while ((car = fgetc(f)) != EOF) {
             start = 0;
@@ -85,9 +85,7 @@ NodeHuffman** _OccurOpti(FILE* f, int* sizeTab)
     int start, end, mid, found;
     int tabOcc[256] = { 0 };
     (*sizeTab) = 0;
-
     ListCharAndNbOcc* list = NULL;
-
     while ((car = fgetc(f)) != EOF)
     {
         tabOcc[car]++;
@@ -96,9 +94,7 @@ NodeHuffman** _OccurOpti(FILE* f, int* sizeTab)
             (*sizeTab) += 1;
         }
     }
-
     NodeHuffman** tab = (NodeHuffman**)malloc(*sizeTab * sizeof(NodeHuffman*));
-
     int i = 0;
     car = 0;
     while (i < *sizeTab)
@@ -112,9 +108,7 @@ NodeHuffman** _OccurOpti(FILE* f, int* sizeTab)
         i++;
         car++;
     }
-
     FreeList(list);
-
     return tab;
 }
 */
@@ -122,8 +116,7 @@ NodeHuffman** _OccurOpti(FILE* f, int* sizeTab)
 
 int main()
 {
-	printf("Hello world\n");
+    printf("Hello world\n");
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
-
