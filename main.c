@@ -93,33 +93,58 @@ int main(int argc, char* argv[])
 						
 						printf("Creating array with all leaves of huffman tree\n");
 						FILE* fTmp;
-						fopen_s(&fTmp, pathOfFileDecompressed, "r");
-						NodeHuffman** tabTmp;
-						int sizeTab;
-						printf("Dichotomy version\n");
-						tabTmp = OccurOpti(fTmp, &sizeTab);
-						if (tabTmp != NULL)
+						err = fopen_s(&fTmp, pathOfFileDecompressed, "r");
+						if (err || fTmp == NULL)
 						{
-							for (int i = 0; i < sizeTab; i++)
-							{
-								printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
-								free(tabTmp[i]); // We do this because we are erasing all the data in the array in the next step
-							}
+							printf("There is an error while opening the file decompressed\n");
 						}
+						else
+						{
+							NodeHuffman** tabTmp = NULL;
+							int sizeTab;
+							printf("Dichotomy version\n");
+							tabTmp = OccurOpti(fTmp, &sizeTab);
+							if (tabTmp != NULL)
+							{
+								for (int i = 0; i < sizeTab; i++)
+								{
+									if (tabTmp[i] != NULL)
+									{
+										printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+										free(tabTmp[i]); // We do this because we are erasing all the data in the array in the next step
+									}
+									else
+									{
+										printf("tabTmp[%d] is NULL pointer, and this should not happend\n", i);
+									}
+								}
+							}
 
-						fseek(fTmp, 0, SEEK_SET);
-						printf("\n\nOur version without dichotomy\n");
-						tabTmp = _OccurOpti(fTmp, &sizeTab);
-						if (tabTmp != NULL)
-						{
-							for (int i = 0; i < sizeTab; i++)
+							fseek(fTmp, 0, SEEK_SET);
+							printf("\n\nOur version without dichotomy\n");
+							tabTmp = _OccurOpti(fTmp, &sizeTab);
+							if (tabTmp != NULL)
 							{
-								printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
-								free(tabTmp[i]); // We are not yet reusing the array
+								for (int i = 0; i < sizeTab; i++)
+								{
+									printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+								}
+								SortArrayByNbOcc(tabTmp, sizeTab);	// ATTENTION : The array need to be short for CreateHuffmanTreeFromArray() function
+								for (int i = 0; i < sizeTab; i++)
+								{
+									printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+								}
+
+								NodeHuffman* huffTree = CreateHuffmanTreeFromArray(tabTmp, sizeTab);
+								PrintHuffmanTree(huffmanTree);
+								printf("\n\n");
+								PrintHuffmanTree(huffTree);
+								FreeHuffmanTree(huffTree);
+								// The tree as already been free so all datas in the array are free, no need to refree them
+								free(tabTmp);
+								fclose(fTmp);
 							}
-							free(tabTmp);
 						}
-						
 						free(pathOfFileDecompressed);
 					}
 
