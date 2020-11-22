@@ -81,7 +81,6 @@ NodeHuffman** OccurOpti(FILE* f, int* sizeTab)
 
 NodeHuffman** _OccurOpti(FILE* f, int* sizeTab)
 {
-    /// NE PAS TOUCHER CEST NOTRE VERSION TROP COOL
     char car;
     int start, end, mid, found;
     int tabOcc[256] = { 0 };
