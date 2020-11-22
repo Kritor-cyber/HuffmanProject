@@ -1,5 +1,7 @@
 #include "OccurOpti.h"
 
+#include "Structures/ListCharAndNbOcc.h"
+
 NodeHuffman* createNodeHuffman(char car)
 {
     NodeHuffman* new_node = NULL;
@@ -77,7 +79,6 @@ NodeHuffman** OccurOpti(FILE* f, int* sizeTab)
     return tab;
 }
 
-/*
 NodeHuffman** _OccurOpti(FILE* f, int* sizeTab)
 {
     /// NE PAS TOUCHER CEST NOTRE VERSION TROP COOL
@@ -110,13 +111,4 @@ NodeHuffman** _OccurOpti(FILE* f, int* sizeTab)
     }
     FreeList(list);
     return tab;
-}
-*/
-
-
-int main()
-{
-    printf("Hello world\n");
-
-    return EXIT_SUCCESS;
 }

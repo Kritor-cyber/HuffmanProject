@@ -8,6 +8,7 @@
 #include "Encoding.h"
 #include "Decoding.h"
 #include "Dictionnary.h"
+#include "OccurOpti.h"
 
 #define DEBUG 1
 
@@ -89,6 +90,36 @@ int main(int argc, char* argv[])
 						printf("Decoding %s\n", pathOfFileCompressed);
 						DecodeFromTree(pathOfFileCompressed, pathOfFileDecompressed, huffmanTree);
 						printf("Decoding finished\n");
+						
+						printf("Creating array with all leaves of huffman tree\n");
+						FILE* fTmp;
+						fopen_s(&fTmp, pathOfFileDecompressed, "r");
+						NodeHuffman** tabTmp;
+						int sizeTab;
+						printf("Dichotomy version\n");
+						tabTmp = OccurOpti(fTmp, &sizeTab);
+						if (tabTmp != NULL)
+						{
+							for (int i = 0; i < sizeTab; i++)
+							{
+								printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+								free(tabTmp[i]); // We do this because we are erasing all the data in the array in the next step
+							}
+						}
+
+						fseek(fTmp, 0, SEEK_SET);
+						printf("\n\nOur version without dichotomy\n");
+						tabTmp = _OccurOpti(fTmp, &sizeTab);
+						if (tabTmp != NULL)
+						{
+							for (int i = 0; i < sizeTab; i++)
+							{
+								printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+								free(tabTmp[i]); // We are not yet reusing the array
+							}
+							free(tabTmp);
+						}
+						
 						free(pathOfFileDecompressed);
 					}
 
