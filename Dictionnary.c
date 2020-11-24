@@ -13,6 +13,7 @@ int GetMaxCodeSize()
 	{
 		printf("Error while opening dico.txt for read\n");
 		PrintErrorMessageFromErrorCodeFromFile(err);
+		return 0;
 	}
 	else
 	{
@@ -40,5 +41,52 @@ int GetMaxCodeSize()
 		fclose(f);
 
 		return max+1;
+	}
+}
+
+void CreateDictionnaryNodeAVLDictionnary(FILE* dic, NodeAVLDictionnary** dictionnary)
+{
+	char c, oldC = '\0';
+	
+	while ((c = fgetc(dic)) != EOF)
+	{
+		fgetc(dic);
+		fgetc(dic);
+		fgetc(dic);
+
+		char* code = (char*)malloc(sizeof(char));
+		char* newCode = NULL;
+		if (code == NULL)
+		{
+			printf("Can't allocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+		}
+		else
+		{
+			int codeSize = 1;
+			oldC = c;
+
+			while ((c = fgetc(dic)) != '\n')
+			{
+				codeSize++;
+				newCode = (char*)realloc(code, sizeof(char) * codeSize);
+				if (newCode == NULL)
+				{
+					printf("Can't reallocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+					codeSize = 0;
+				}
+				else
+				{
+					code = newCode;
+					code[codeSize - 2] = c;
+				}
+			}
+
+			if (code != NULL)
+			{
+				code[codeSize - 1] = '\0';
+				AddNodeInNodeDictionnary(dictionnary, oldC, code);
+				AVLBalance(dictionnary);
+			}
+		}
 	}
 }

@@ -158,8 +158,63 @@ int main(int argc, char* argv[])
 									free(pathOfFileCompressed2);
 								}
 								
+								FILE* newDicFile;
+								err = fopen_s(&newDicFile, "newDico.txt", "w");
+								if (err || newDicFile == NULL)
+								{
+									printf("There is an error while opening the file decompressed\n");
+								}
+								else
+								{
+									printf("\nWriting dictionnary...\n");
+									WriteAVLDictionnary(dictionnary, newDicFile);
+									printf("Dictionnary writing finished...\n");
+									fclose(newDicFile);
+								}
+
+								PrintNodeAVLDictionnary(dictionnary);
 								FreeNodeAVLDictionnary(dictionnary);
 
+								err = fopen_s(&newDicFile, "newDico.txt", "r");
+								if (err || newDicFile == NULL)
+								{
+									printf("There is an error while opening the file decompressed\n");
+								}
+								else
+								{
+									dictionnary = NULL;
+									CreateDictionnaryNodeAVLDictionnary(newDicFile, &dictionnary);
+									if (dictionnary != NULL)
+									{
+										PrintNodeAVLDictionnary(dictionnary);
+
+										char* pathOfFileCompressed3 = AddStringBeforeExtensionOfFileName(pathOfFileCompressed, "_withChargedDic");
+										if (pathOfFileCompressed3 == NULL)
+										{
+											printf("Error while allocating memory to pathOfFileCompressed3\n");
+										}
+										else
+										{
+											printf("Encoding %s\n", argv[1]);
+											EncodeFileAVLTree(argv[1], pathOfFileCompressed3, dictionnary);
+											printf("Encoding finished\n");
+
+											NodeHuffman* treeToDecompress = CreateHuffmanTreeFromDictionnaryFile("dico.txt");
+											char* pathOfFileDecompressed2 = AddStringBeforeExtensionOfFileName(pathOfFileCompressed2, "_fromDicFile");
+											if (treeToDecompress != NULL && pathOfFileDecompressed2 != NULL)
+											{
+												printf("Decoding %s\n", pathOfFileCompressed3);
+												DecodeFromTree(pathOfFileCompressed, pathOfFileDecompressed2, huffmanTree);
+												printf("Decoding finished\n");
+												free(pathOfFileDecompressed2);
+											}
+
+											free(pathOfFileCompressed3);
+										}
+
+										FreeNodeAVLDictionnary(dictionnary);
+									}
+								}
 								FreeHuffmanTree(huffTree);
 								// The tree as already been free so all datas in the array are free, no need to refree them
 								free(tabTmp);

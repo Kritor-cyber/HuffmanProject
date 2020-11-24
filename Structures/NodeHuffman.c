@@ -8,6 +8,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+NodeHuffman* CreateNodeHuffmanFromChar(char c)
+{
+	NodeHuffman* node = (NodeHuffman*)malloc(sizeof(NodeHuffman));
+
+	if (node != NULL)
+	{
+		node->c = c;
+		node->nbOcc = 1;
+		node->left = NULL;
+		node->right = NULL;
+	}
+
+	return node;
+}
+
 NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc *list)
 {
 	NodeHuffman* nextNode = NULL;
@@ -162,7 +177,7 @@ void WriteDictionnary(NodeHuffman* tree)
 	}
 	else
 	{
-		FILE *dic = NULL;
+		FILE* dic = NULL;
 		errno_t err = fopen_s(&dic, "dico.txt", "w");
 
 		if (err || dic == NULL)
@@ -333,4 +348,93 @@ NodeHuffman* CreateNodeHuffmanFromCharAndNbOccAndChilds(char car, int nbOcc, Nod
 	}
 
 	return node;
+}
+
+NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
+{
+	if (dicPath != NULL)
+	{
+		FILE* dic = NULL;
+		errno_t err = fopen_s(&dic, dicPath, "r");
+
+		if (err || dic == NULL)
+		{
+			PrintErrorMessageFromErrorCodeFromFile(err);
+			return NULL;
+		}
+		else
+		{
+			NodeHuffman* tree = NULL;
+			char c, oldC = '\0';
+
+			while ((c = fgetc(dic)) != EOF)
+			{
+				fgetc(dic);
+				fgetc(dic);
+				fgetc(dic);
+
+				char* code = (char*)malloc(sizeof(char));
+				char* newCode = NULL;
+				if (code == NULL)
+				{
+					printf("Can't allocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+				}
+				else
+				{
+					int codeSize = 1;
+					oldC = c;
+
+					while ((c = fgetc(dic)) != '\n')
+					{
+						codeSize++;
+						newCode = (char*)realloc(code, sizeof(char) * codeSize);
+						if (newCode == NULL)
+						{
+							printf("Can't reallocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+							codeSize = 0;
+						}
+						else
+						{
+							code = newCode;
+							code[codeSize - 2] = c;
+						}
+					}
+
+					if (code != NULL)
+					{
+						code[codeSize - 1] = '\0';
+						AddNodeHuffmanInHuffmanTree(&tree, c, code);
+					}
+				}
+			}
+
+			return tree;
+		}
+	}
+
+	return NULL;
+}
+
+void AddNodeHuffmanInHuffmanTree(NodeHuffman** tree, char c, char* code)
+{
+	if (*tree == NULL)
+	{
+		(*tree) = CreateNodeHuffmanFromChar('\0');
+	}
+
+	if (code != NULL)
+	{
+		if (code[0] == '\0')
+		{
+			(*tree)->c = c;
+		}
+		else if (code[0] == '1')
+		{
+			AddNodeHuffmanInHuffmanTree(&((*tree)->right), c, code + 1);
+		}
+		else if (code[0] == '0')
+		{
+			AddNodeHuffmanInHuffmanTree(&((*tree)->left), c, code + 1);
+		}
+	}
 }
