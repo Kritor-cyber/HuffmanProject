@@ -172,8 +172,6 @@ int main(int argc, char* argv[])
 									fclose(newDicFile);
 								}
 
-								PrintNodeAVLDictionnary(dictionnary);
-								FreeNodeAVLDictionnary(dictionnary);
 
 								err = fopen_s(&newDicFile, "newDico.txt", "r");
 								if (err || newDicFile == NULL)
@@ -182,12 +180,8 @@ int main(int argc, char* argv[])
 								}
 								else
 								{
-									dictionnary = NULL;
-									CreateDictionnaryNodeAVLDictionnary(newDicFile, &dictionnary);
 									if (dictionnary != NULL)
 									{
-										PrintNodeAVLDictionnary(dictionnary);
-
 										char* pathOfFileCompressed3 = AddStringBeforeExtensionOfFileName(pathOfFileCompressed, "_withChargedDic");
 										if (pathOfFileCompressed3 == NULL)
 										{
@@ -200,7 +194,7 @@ int main(int argc, char* argv[])
 											printf("Encoding finished\n");
 
 											NodeHuffman* treeToDecompress = CreateHuffmanTreeFromDictionnaryFile("dico.txt");
-											char* pathOfFileDecompressed2 = AddStringBeforeExtensionOfFileName(pathOfFileCompressed2, "_fromDicFile");
+											char* pathOfFileDecompressed2 = AddStringBeforeExtensionOfFileName(pathOfFileDecompressed, "_fromDicFile");
 											if (treeToDecompress != NULL && pathOfFileDecompressed2 != NULL)
 											{
 												printf("Decoding %s\n", pathOfFileCompressed3);

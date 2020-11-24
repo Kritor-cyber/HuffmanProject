@@ -4,5 +4,3 @@
 #include <stdio.h>
 
 int GetMaxCodeSize();
-
-void CreateDictionnaryNodeAVLDictionnary(FILE* dic, NodeAVLDictionnary** dictionnary);
