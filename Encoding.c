@@ -86,3 +86,40 @@ void EncodeFile(char* pathOfFileToCompress, char* pathOfFileCompressed, FILE* di
 		fclose(fileToCompress);
 	}
 }
+
+void EncodeFileAVLTree(char* pathOfFileToCompress, char* pathOfFileCompressed, NodeAVLDictionnary* dic)
+{
+	FILE* fileToCompress = NULL;
+	errno_t err = fopen_s(&fileToCompress, pathOfFileToCompress, "r");
+	if (err || fileToCompress == NULL)
+	{
+		printf("Can't open file %s for read\n", pathOfFileToCompress);
+		PrintErrorMessageFromErrorCodeFromFile(err);
+	}
+	else
+	{
+		FILE* fileCompressed = NULL;
+		err = fopen_s(&fileCompressed, pathOfFileCompressed, "w");
+		if (err || fileCompressed == NULL)
+		{
+			printf("Can't open file %s for read\n", pathOfFileCompressed);
+			PrintErrorMessageFromErrorCodeFromFile(err);
+		}
+		else
+		{
+			char c;
+			char* code = NULL;
+			while ((c = fgetc(fileToCompress)) != EOF)
+			{
+				code = GetCharCodeFromAVLDic(dic, c);
+				if (fprintf_s(fileCompressed, "%s", code) < 0)
+				{
+					printf("Error while writing into the compressed file\n");
+				}
+			}
+
+			fclose(fileCompressed);
+		}
+		fclose(fileToCompress);
+	}
+}

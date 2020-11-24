@@ -21,6 +21,7 @@ void _AVLRightRotation(NodeAVLDictionnary** tree);
 void _AVLLeftRotation(NodeAVLDictionnary** tree);
 void AVLBalance(NodeAVLDictionnary** tree);
 
+char* GetCharCodeFromAVLDic(NodeAVLDictionnary* dic, char c);
 
 void PrintNodeAVLDictionnary(NodeAVLDictionnary* tree);
 void FreeNodeAVLDictionnary(NodeAVLDictionnary* tree);
