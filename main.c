@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "StringManipulation.h"
-#include "FileManipulation.h"
+#include "ASCIIToBinary.h"
+#include "Utilities.h"
 #include "Structures/ListCharAndNbOcc.h"
 #include "Structures/NodeHuffman.h"
 #include "Encoding.h"
 #include "Decoding.h"
 #include "Dictionnary.h"
 #include "OccurOpti.h"
-#include "Structures/AVLTree.h"
+#include "Structures/NodeAVLDictionnary.h"
 
 #define DEBUG 1
 
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
 							NodeHuffman** tabTmp = NULL;
 							int sizeTab;
 							printf("Dichotomy version\n");
-							tabTmp = OccurOpti(fTmp, &sizeTab);
+							tabTmp = _CreateArrayOfNodeHuffmanWithNbOccFromFile(fTmp, &sizeTab);
 							if (tabTmp != NULL)
 							{
 								for (int i = 0; i < sizeTab; i++)
@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
 
 							fseek(fTmp, 0, SEEK_SET);
 							printf("\n\nOur version without dichotomy\n");
-							tabTmp = _OccurOpti(fTmp, &sizeTab);
+							tabTmp = _CreateArrayOfNodeHuffmanWithNbOccFromFile(fTmp, &sizeTab);
 							if (tabTmp != NULL)
 							{
 								for (int i = 0; i < sizeTab; i++)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdio.h>
 #include "ListCharAndNbOcc.h"
 
 typedef struct NodeHuffman
@@ -13,20 +14,12 @@ typedef struct NodeHuffman
 NodeHuffman* CreateNodeHuffmanFromChar(char c);
 NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc* list);
 NodeHuffman* NodeHuffmanFromNodeCharAndNbOcc(ListCharAndNbOcc* list);
+void AddNodeHuffmanInArray(NodeHuffman** array, int arrSize, char car, int pos);
+NodeHuffman** CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab);
 
-void WriteDictionnary(NodeHuffman* tree);
+NodeHuffman** _CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab);
 
-void PrintHuffmanTree(NodeHuffman* tree);
-void FreeHuffmanTree(NodeHuffman* tree);
-
-void SortArrayByNbOcc(NodeHuffman** array, int size);
 NodeHuffman* CreateNodeHuffmanFromCharAndNbOccAndChilds(char car, int nbOcc, NodeHuffman* leftChild, NodeHuffman* rightChild);
 NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size);
 
-NodeHuffman* GetMinNodeFromArray(NodeHuffman** array, int size);
-void RemoveNodeFromArray(NodeHuffman** array, int size, NodeHuffman* nodeToRemove);
-void UpdateArrayNextHuffmanNodes(NodeHuffman** array, int size, void* l1, void* l2);
-
 NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath);
-
-void AddNodeHuffmanInHuffmanTree(NodeHuffman** tree, char c, char* code);

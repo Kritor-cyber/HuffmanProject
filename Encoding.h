@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Structures/AVLTree.h"
+#include "Structures/NodeAVLDictionnary.h"
 
 #include <stdio.h>
 
