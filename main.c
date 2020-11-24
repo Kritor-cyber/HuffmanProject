@@ -8,6 +8,8 @@
 #include "Encoding.h"
 #include "Decoding.h"
 #include "Dictionnary.h"
+#include "OccurOpti.h"
+#include "Structures/AVLTree.h"
 
 #define DEBUG 1
 
@@ -89,6 +91,130 @@ int main(int argc, char* argv[])
 						printf("Decoding %s\n", pathOfFileCompressed);
 						DecodeFromTree(pathOfFileCompressed, pathOfFileDecompressed, huffmanTree);
 						printf("Decoding finished\n");
+						
+						printf("Creating array with all leaves of huffman tree\n");
+						FILE* fTmp;
+						err = fopen_s(&fTmp, pathOfFileDecompressed, "r");
+						if (err || fTmp == NULL)
+						{
+							printf("There is an error while opening the file decompressed\n");
+						}
+						else
+						{
+							NodeHuffman** tabTmp = NULL;
+							int sizeTab;
+							printf("Dichotomy version\n");
+							tabTmp = OccurOpti(fTmp, &sizeTab);
+							if (tabTmp != NULL)
+							{
+								for (int i = 0; i < sizeTab; i++)
+								{
+									if (tabTmp[i] != NULL)
+									{
+										printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+										free(tabTmp[i]); // We do this because we are erasing all the data in the array in the next step
+									}
+									else
+									{
+										printf("tabTmp[%d] is NULL pointer, and this should not happend\n", i);
+									}
+								}
+							}
+
+							fseek(fTmp, 0, SEEK_SET);
+							printf("\n\nOur version without dichotomy\n");
+							tabTmp = _OccurOpti(fTmp, &sizeTab);
+							if (tabTmp != NULL)
+							{
+								for (int i = 0; i < sizeTab; i++)
+								{
+									printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+								}
+								SortArrayByNbOcc(tabTmp, sizeTab);	// WARNING : The array need to be short for CreateHuffmanTreeFromArray() function
+								for (int i = 0; i < sizeTab; i++)
+								{
+									printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
+								}
+
+								NodeHuffman* huffTree = CreateHuffmanTreeFromArray(tabTmp, sizeTab);
+								PrintHuffmanTree(huffmanTree);
+								printf("\n\n");
+								PrintHuffmanTree(huffTree);
+								printf("\n");
+
+								NodeAVLDictionnary* dictionnary = CreerAVLDictionnaire(huffTree);
+								PrintNodeAVLDictionnary(dictionnary);
+								
+								char* pathOfFileCompressed2 = AddStringBeforeExtensionOfFileName(pathOfFileCompressed, "_opti");
+								if (pathOfFileCompressed2 == NULL)
+								{
+									printf("Error while allocating memory to pathOfFileCompressed2\n");
+								}
+								else
+								{
+									printf("Encoding %s\n", argv[1]);
+									EncodeFileAVLTree(argv[1], pathOfFileCompressed2, dictionnary);
+									printf("Encoding finished\n");
+									free(pathOfFileCompressed2);
+								}
+								
+								FILE* newDicFile;
+								err = fopen_s(&newDicFile, "newDico.txt", "w");
+								if (err || newDicFile == NULL)
+								{
+									printf("There is an error while opening the file decompressed\n");
+								}
+								else
+								{
+									printf("\nWriting dictionnary...\n");
+									WriteAVLDictionnary(dictionnary, newDicFile);
+									printf("Dictionnary writing finished...\n");
+									fclose(newDicFile);
+								}
+
+
+								err = fopen_s(&newDicFile, "newDico.txt", "r");
+								if (err || newDicFile == NULL)
+								{
+									printf("There is an error while opening the file decompressed\n");
+								}
+								else
+								{
+									if (dictionnary != NULL)
+									{
+										char* pathOfFileCompressed3 = AddStringBeforeExtensionOfFileName(pathOfFileCompressed, "_withChargedDic");
+										if (pathOfFileCompressed3 == NULL)
+										{
+											printf("Error while allocating memory to pathOfFileCompressed3\n");
+										}
+										else
+										{
+											printf("Encoding %s\n", argv[1]);
+											EncodeFileAVLTree(argv[1], pathOfFileCompressed3, dictionnary);
+											printf("Encoding finished\n");
+
+											NodeHuffman* treeToDecompress = CreateHuffmanTreeFromDictionnaryFile("dico.txt");
+											char* pathOfFileDecompressed2 = AddStringBeforeExtensionOfFileName(pathOfFileDecompressed, "_fromDicFile");
+											if (treeToDecompress != NULL && pathOfFileDecompressed2 != NULL)
+											{
+												printf("Decoding %s\n", pathOfFileCompressed3);
+												DecodeFromTree(pathOfFileCompressed, pathOfFileDecompressed2, huffmanTree);
+												printf("Decoding finished\n");
+												free(pathOfFileDecompressed2);
+											}
+
+											free(pathOfFileCompressed3);
+										}
+
+										FreeNodeAVLDictionnary(dictionnary);
+									}
+								}
+								FreeHuffmanTree(huffTree);
+								// The tree as already been free so all datas in the array are free, no need to refree them
+								free(tabTmp);
+								fclose(fTmp);
+							}
+						}
 						free(pathOfFileDecompressed);
 					}
 

@@ -39,7 +39,7 @@ void DecodeFromTree(const char* pathToTheFileToDecode, const char* pathToTheDeco
 					tmpHuffmanTree = tmpHuffmanTree->right;
 				}
 
-				if (tmpHuffmanTree->c != NULL)
+				if (tmpHuffmanTree->c != '\0')
 				{
 					if (fprintf_s(fileDecoded, "%c", tmpHuffmanTree->c) < 0)
 					{

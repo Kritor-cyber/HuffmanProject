@@ -2,10 +2,26 @@
 
 #include "ListHuffman.h"
 #include "../Utilities.h"
+#include "QueueNodeHuffman.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+NodeHuffman* CreateNodeHuffmanFromChar(char c)
+{
+	NodeHuffman* node = (NodeHuffman*)malloc(sizeof(NodeHuffman));
+
+	if (node != NULL)
+	{
+		node->c = c;
+		node->nbOcc = 1;
+		node->left = NULL;
+		node->right = NULL;
+	}
+
+	return node;
+}
 
 NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc *list)
 {
@@ -161,7 +177,7 @@ void WriteDictionnary(NodeHuffman* tree)
 	}
 	else
 	{
-		FILE *dic = NULL;
+		FILE* dic = NULL;
 		errno_t err = fopen_s(&dic, "dico.txt", "w");
 
 		if (err || dic == NULL)
@@ -204,5 +220,221 @@ void FreeHuffmanTree(NodeHuffman* tree)
 		FreeHuffmanTree(tree->right);
 
 		free(tree);
+	}
+}
+
+int IsSuperior(NodeHuffman** noeud1, NodeHuffman** noeud2)
+{
+	if ((*noeud1)->nbOcc < (*noeud2)->nbOcc) return -1;
+	if ((*noeud1)->nbOcc > (*noeud2)->nbOcc) return 1;
+	return 0;
+}
+
+void SortArrayByNbOcc(NodeHuffman** array, int size)
+{
+	printf("avant : %p\n", *array);
+	qsort(array, size, sizeof(NodeHuffman*), IsSuperior);
+	printf("apres : %p\n", *array);
+}
+
+
+// K
+NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size)
+{
+	if (size == 0)
+	{
+		printf("t (%d) can't be less than 1\n", size);
+	}
+	else
+	{
+		NodeHuffman* nodes[4] = { NULL, NULL, NULL, NULL };
+		NodeHuffman* nodeMin1 = NULL;
+		NodeHuffman* nodeMin2 = NULL;
+		NodeHuffman* newNode = NULL;
+		QueueNodeHuffman* list = NULL;
+		QueueNodeHuffman* listNodeHuffmanTree = NULL;
+		InitializeQueue(&list);
+		InitializeQueue(&listNodeHuffmanTree);
+		if (list == NULL || listNodeHuffmanTree == NULL)
+		{
+			printf("failed to initialize list or listNodeHuffmanTree in CreateHuffmanTreeFromArray in NodeHuffman.c\n");
+		}
+		else
+		{
+			for (int i = 0; i < size; i++)
+			{
+				AddDataInQueue(list, array[i]);
+			}
+
+			while (list->size + listNodeHuffmanTree->size > 1)
+			{
+				UpdateArrayNextHuffmanNodes(nodes, 4, list, listNodeHuffmanTree);
+				nodeMin1 = GetMinNodeFromArray(nodes, 4);
+				RemoveNodeFromArray(nodes, 4, nodeMin1);
+				nodeMin2 = GetMinNodeFromArray(nodes, 4);
+				RemoveNodeFromArray(nodes, 4, nodeMin2);
+
+				newNode = CreateNodeHuffmanFromCharAndNbOccAndChilds('\0', nodeMin1->nbOcc + nodeMin2->nbOcc, nodeMin1, nodeMin2);
+				AddDataInQueue(listNodeHuffmanTree, newNode);
+			}
+
+			if (list->size != 0)
+			{
+				printf("Strange, how can this happen ?? (NodeHuffman.c in CreateHuffmanTreeFromArray()\n");
+				return GetDataFromQueueNodeHuffman(list);
+			}
+			else
+			{
+				return GetDataFromQueueNodeHuffman(listNodeHuffmanTree);
+			}
+		}
+	}
+}
+
+void UpdateArrayNextHuffmanNodes(NodeHuffman** array, int size, QueueNodeHuffman* l1, QueueNodeHuffman* l2)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (array[i] == NULL)
+		{
+			if (i < 2)
+			{
+				array[i] = GetDataFromQueueNodeHuffman(l1);
+			}
+			else
+			{
+				array[i] = GetDataFromQueueNodeHuffman(l2);
+			}
+		}
+	}
+}
+
+NodeHuffman* GetMinNodeFromArray(NodeHuffman** array, int size)
+{
+	NodeHuffman* minNode = NULL;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (array[i] != NULL && (minNode == NULL || minNode->nbOcc > array[i]->nbOcc))
+		{
+			minNode = array[i];
+		}
+	}
+
+	return minNode;
+}
+
+void RemoveNodeFromArray(NodeHuffman** array, int size, NodeHuffman* nodeToRemove)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (array[i] == nodeToRemove)
+		{
+			array[i] = NULL;
+		}
+	}
+}
+
+NodeHuffman* CreateNodeHuffmanFromCharAndNbOccAndChilds(char car, int nbOcc, NodeHuffman* leftChild, NodeHuffman* rightChild)
+{
+	NodeHuffman* node = (NodeHuffman*)malloc(sizeof(NodeHuffman));
+
+	if (node != NULL)
+	{
+		node->c = car;
+		node->nbOcc = nbOcc;
+		node->left = leftChild;
+		node->right = rightChild;
+	}
+
+	return node;
+}
+
+NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
+{
+	if (dicPath != NULL)
+	{
+		FILE* dic = NULL;
+		errno_t err = fopen_s(&dic, dicPath, "r");
+
+		if (err || dic == NULL)
+		{
+			PrintErrorMessageFromErrorCodeFromFile(err);
+			return NULL;
+		}
+		else
+		{
+			NodeHuffman* tree = NULL;
+			char c, oldC = '\0';
+
+			while ((c = fgetc(dic)) != EOF)
+			{
+				fgetc(dic);
+				fgetc(dic);
+				fgetc(dic);
+
+				char* code = (char*)malloc(sizeof(char));
+				char* newCode = NULL;
+				if (code == NULL)
+				{
+					printf("Can't allocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+				}
+				else
+				{
+					int codeSize = 1;
+					oldC = c;
+
+					while ((c = fgetc(dic)) != '\n')
+					{
+						codeSize++;
+						newCode = (char*)realloc(code, sizeof(char) * codeSize);
+						if (newCode == NULL)
+						{
+							printf("Can't reallocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+							codeSize = 0;
+						}
+						else
+						{
+							code = newCode;
+							code[codeSize - 2] = c;
+						}
+					}
+
+					if (code != NULL)
+					{
+						code[codeSize - 1] = '\0';
+						AddNodeHuffmanInHuffmanTree(&tree, c, code);
+					}
+				}
+			}
+
+			return tree;
+		}
+	}
+
+	return NULL;
+}
+
+void AddNodeHuffmanInHuffmanTree(NodeHuffman** tree, char c, char* code)
+{
+	if (*tree == NULL)
+	{
+		(*tree) = CreateNodeHuffmanFromChar('\0');
+	}
+
+	if (code != NULL)
+	{
+		if (code[0] == '\0')
+		{
+			(*tree)->c = c;
+		}
+		else if (code[0] == '1')
+		{
+			AddNodeHuffmanInHuffmanTree(&((*tree)->right), c, code + 1);
+		}
+		else if (code[0] == '0')
+		{
+			AddNodeHuffmanInHuffmanTree(&((*tree)->left), c, code + 1);
+		}
 	}
 }

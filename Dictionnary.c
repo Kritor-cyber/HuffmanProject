@@ -13,6 +13,7 @@ int GetMaxCodeSize()
 	{
 		printf("Error while opening dico.txt for read\n");
 		PrintErrorMessageFromErrorCodeFromFile(err);
+		return 0;
 	}
 	else
 	{
@@ -42,3 +43,4 @@ int GetMaxCodeSize()
 		return max+1;
 	}
 }
+
