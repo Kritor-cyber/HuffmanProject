@@ -225,6 +225,28 @@ void AVLBalance(NodeAVLDictionnary** tree)
 }
 
 
+char* GetCharCodeFromAVLDic(NodeAVLDictionnary* dic, char c)
+{
+	while (dic != NULL)
+	{
+		if (c > dic->c)
+		{
+			dic = dic->right;
+		}
+		else if (c < dic->c)
+		{
+			dic = dic->left;
+		}
+		else if (c == dic->c)
+		{
+			return dic->code;
+		}
+	}
+
+	return NULL;
+}
+
+
 void PrintNodeAVLDictionnary(NodeAVLDictionnary* tree)
 {
 	if (tree != NULL)

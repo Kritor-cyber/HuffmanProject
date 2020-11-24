@@ -144,6 +144,20 @@ int main(int argc, char* argv[])
 
 								NodeAVLDictionnary* dictionnary = CreerAVLDictionnaire(huffTree);
 								PrintNodeAVLDictionnary(dictionnary);
+								
+								char* pathOfFileCompressed2 = AddStringBeforeExtensionOfFileName(pathOfFileCompressed, "_opti");
+								if (pathOfFileCompressed2 == NULL)
+								{
+									printf("Error while allocating memory to pathOfFileCompressed2\n");
+								}
+								else
+								{
+									printf("Encoding %s\n", argv[1]);
+									EncodeFileAVLTree(argv[1], pathOfFileCompressed2, dictionnary);
+									printf("Encoding finished\n");
+									free(pathOfFileCompressed2);
+								}
+								
 								FreeNodeAVLDictionnary(dictionnary);
 
 								FreeHuffmanTree(huffTree);
