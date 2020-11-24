@@ -10,6 +10,7 @@ typedef struct NodeHuffman
 	struct NodeHuffman* right;
 } NodeHuffman;
 
+NodeHuffman* CreateNodeHuffmanFromChar(char c);
 NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc* list);
 NodeHuffman* NodeHuffmanFromNodeCharAndNbOcc(ListCharAndNbOcc* list);
 
@@ -25,3 +26,7 @@ NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size);
 NodeHuffman* GetMinNodeFromArray(NodeHuffman** array, int size);
 void RemoveNodeFromArray(NodeHuffman** array, int size, NodeHuffman* nodeToRemove);
 void UpdateArrayNextHuffmanNodes(NodeHuffman** array, int size, void* l1, void* l2);
+
+NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath);
+
+void AddNodeHuffmanInHuffmanTree(NodeHuffman** tree, char c, char* code);

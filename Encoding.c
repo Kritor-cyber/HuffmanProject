@@ -123,3 +123,13 @@ void EncodeFileAVLTree(char* pathOfFileToCompress, char* pathOfFileCompressed, N
 		fclose(fileToCompress);
 	}
 }
+
+void WriteAVLDictionnary(NodeAVLDictionnary* tree, FILE* dic)
+{
+	if (tree != NULL)
+	{
+		fprintf_s(dic, "%c : %s\n", tree->c, tree->code);
+		WriteAVLDictionnary(tree->left, dic);
+		WriteAVLDictionnary(tree->right, dic);
+	}
+}
