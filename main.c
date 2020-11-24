@@ -9,6 +9,7 @@
 #include "Decoding.h"
 #include "Dictionnary.h"
 #include "OccurOpti.h"
+#include "Structures/AVLTree.h"
 
 #define DEBUG 1
 
@@ -129,7 +130,7 @@ int main(int argc, char* argv[])
 								{
 									printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
 								}
-								SortArrayByNbOcc(tabTmp, sizeTab);	// ATTENTION : The array need to be short for CreateHuffmanTreeFromArray() function
+								SortArrayByNbOcc(tabTmp, sizeTab);	// WARNING : The array need to be short for CreateHuffmanTreeFromArray() function
 								for (int i = 0; i < sizeTab; i++)
 								{
 									printf("%c : %d\n", tabTmp[i]->c, tabTmp[i]->nbOcc);
@@ -139,6 +140,12 @@ int main(int argc, char* argv[])
 								PrintHuffmanTree(huffmanTree);
 								printf("\n\n");
 								PrintHuffmanTree(huffTree);
+								printf("\n");
+
+								NodeAVLDictionnary* dictionnary = CreerAVLDictionnaire(huffTree);
+								PrintNodeAVLDictionnary(dictionnary);
+								FreeNodeAVLDictionnary(dictionnary);
+
 								FreeHuffmanTree(huffTree);
 								// The tree as already been free so all datas in the array are free, no need to refree them
 								free(tabTmp);
