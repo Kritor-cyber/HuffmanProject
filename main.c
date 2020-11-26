@@ -8,7 +8,6 @@
 #include "Encoding.h"
 #include "Decoding.h"
 #include "Dictionnary.h"
-#include "OccurOpti.h"
 #include "Structures/NodeAVLDictionnary.h"
 
 #define DEBUG 1
