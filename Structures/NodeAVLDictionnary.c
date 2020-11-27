@@ -93,55 +93,42 @@ void _CreerAVLDictionnaire(NodeHuffman* actualNode, char* code, int codeSize, No
 		{
 			codeSize++;
 			char* newCode = (char*)malloc(sizeof(char) * codeSize);
-			if (newCode == NULL)
+			char* newCode2 = (char*)malloc(sizeof(char) * codeSize);
+			if (newCode == NULL || newCode2 == NULL)
 			{
-				printf("failed to allocte memory to newCode (%d bytes).\n", codeSize);
+				printf("failed to allocte memory to newCode (%d bytes) and/or to newCode2.\n", codeSize);
 			}
 			else
 			{
 				errno_t err = strcpy_s(newCode, codeSize, code);
+				// Si on copie le code et que l'on ne l'utilise plus, alors on le supprime
+				free(code);
 				if (err)
 				{
 					printf("failed to copy the code %s (error code : %d)\n", code, err);
 				}
 				else
 				{
-					newCode[codeSize - 2] = -1;
-					newCode[codeSize - 1] = '\0';
 
-					if (actualNode->left != NULL)
+					err = strcpy_s(newCode2, codeSize, newCode);
+					if (err)
 					{
-						newCode[codeSize - 2] = '0';
-						_CreerAVLDictionnaire(actualNode->left, newCode, codeSize, tree);
+						printf("failed to copy the newCode %s to newCode2 (error code : %d)\n", newCode, err);
 					}
-					if (actualNode->right != NULL)
+					else
 					{
-						if (newCode[codeSize - 2] == -1)
+						newCode[codeSize - 1] = '\0';
+						newCode2[codeSize - 1] = '\0';
+
+						if (actualNode->left != NULL)
 						{
-							newCode[codeSize - 2] = '1';
-							_CreerAVLDictionnaire(actualNode->right, newCode, codeSize, tree);
+							newCode[codeSize - 2] = '0';
+							_CreerAVLDictionnaire(actualNode->left, newCode, codeSize, tree);
 						}
-						else
+						if (actualNode->right != NULL)
 						{
-							char* newCode2 = (char*)malloc(sizeof(char) * codeSize);
-							if (newCode2 == NULL)
-							{
-								printf("failed to allocte memory to newCode2 (%d bytes).\n", codeSize);
-							}
-							else
-							{
-								errno_t err = strcpy_s(newCode2, codeSize, code);
-								if (err)
-								{
-									printf("failed to copy the code %s (error code : %d)\n", code, err);
-								}
-								else
-								{
-									newCode2[codeSize - 2] = '1';
-									newCode2[codeSize - 1] = '\0';
-									_CreerAVLDictionnaire(actualNode->right, newCode2, codeSize, tree);
-								}
-							}
+							newCode2[codeSize - 2] = '1';
+							_CreerAVLDictionnaire(actualNode->right, newCode2, codeSize, tree);
 						}
 					}
 				}

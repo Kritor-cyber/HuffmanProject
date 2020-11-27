@@ -186,36 +186,49 @@ NodeHuffman** CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab)
 	return tab;
 }
 
-NodeHuffman** _CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab)
+NodeHuffman** _CreateArrayOfNodeHuffmanWithNbOccFromFile(char* pathOfFile, int* sizeTab)
 {
-	char car;
-	int tabOcc[256] = { 0 };
-	(*sizeTab) = 0;
-	ListCharAndNbOcc* list = NULL;
-	while ((car = fgetc(f)) != EOF)
+	FILE* f = NULL;
+	errno_t err = fopen_s(&f, pathOfFile, "r");
+	if (err || f == NULL)
 	{
-		tabOcc[car]++;
-		if (tabOcc[car] == 1)
-		{
-			(*sizeTab) += 1;
-		}
+		printf("There is an error while opening the file %s\n", pathOfFile);
+		PrintErrorMessageFromErrorCodeFromFile(err);
 	}
-	NodeHuffman** tab = (NodeHuffman**)malloc(*sizeTab * sizeof(NodeHuffman*));
-	int i = 0;
-	car = 0;
-	while (i < *sizeTab)
+	else
 	{
-		while (tabOcc[car] == 0)
+		char car;
+		int tabOcc[256] = { 0 };
+		(*sizeTab) = 0;
+		ListCharAndNbOcc* list = NULL;
+		while ((car = fgetc(f)) != EOF)
 		{
+			tabOcc[car]++;
+			if (tabOcc[car] == 1)
+			{
+				(*sizeTab) += 1;
+			}
+		}
+		NodeHuffman** tab = (NodeHuffman**)malloc(*sizeTab * sizeof(NodeHuffman*));
+		int i = 0;
+		car = 0;
+		while (i < *sizeTab)
+		{
+			while (tabOcc[car] == 0)
+			{
+				car++;
+			}
+			tab[i] = CreateNodeHuffmanFromChar(car);
+			tab[i]->nbOcc = tabOcc[car];
+			i++;
 			car++;
 		}
-		tab[i] = CreateNodeHuffmanFromChar(car);
-		tab[i]->nbOcc = tabOcc[car];
-		i++;
-		car++;
+		FreeList(list);
+		fclose(f);
+		return tab;
 	}
-	FreeList(list);
-	return tab;
+	
+	return NULL;
 }
 
 NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size)
@@ -260,14 +273,24 @@ NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size)
 			if (list->size != 0)
 			{
 				printf("Strange, how can this happen ?? (NodeHuffman.c in CreateHuffmanTreeFromArray()\n");
-				return GetDataFromQueueNodeHuffman(list);
+				NodeHuffman* huffmanTreeToReturn = GetDataFromQueueNodeHuffman(list);
+				FreeQueueNodeHuffman(list);
+				FreeQueueNodeHuffman(listNodeHuffmanTree);
+				return huffmanTreeToReturn;
 			}
 			else
 			{
-				return GetDataFromQueueNodeHuffman(listNodeHuffmanTree);
+				NodeHuffman* huffmanTreeToReturn = GetDataFromQueueNodeHuffman(listNodeHuffmanTree);
+				FreeQueueNodeHuffman(list);
+				FreeQueueNodeHuffman(listNodeHuffmanTree);
+				return huffmanTreeToReturn;
 			}
+
+			FreeQueueNodeHuffman(listNodeHuffmanTree);
 		}
 	}
+
+	return NULL;
 }
 
 NodeHuffman* CreateNodeHuffmanFromCharAndNbOccAndChilds(char car, int nbOcc, NodeHuffman* leftChild, NodeHuffman* rightChild)

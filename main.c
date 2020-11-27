@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "Menu.h"
+
 #include "ASCIIToBinary.h"
 #include "Utilities.h"
 #include "Structures/ListCharAndNbOcc.h"
@@ -14,6 +16,15 @@
 
 int main(int argc, char* argv[])
 {
+	/*int a;
+	scanf_s("%d", &a);
+	printf("");*/
+	// Pour une raison que j'ignore le printf et scanf provoque une "fuite de mémoire" de 1 peut importe le nombre d'utilisation
+
+	StartMenu();
+	
+	return 0;
+	
 	printf("Compression de fichiers textes...\n\n");
 	if (argc != 2 && argc != 3)
 	{
