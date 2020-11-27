@@ -15,3 +15,7 @@ static void CleanInputBuffer();
 static void Pause();
 
 void CompressFile();
+
+void DecompressFile();
+
+void ConvertIntoFakeBinary();

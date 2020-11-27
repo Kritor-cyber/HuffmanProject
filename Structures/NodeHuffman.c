@@ -4,6 +4,7 @@
 #include "../Utilities.h"
 #include "QueueNodeHuffman.h"
 #include "../FunctionsOfStructures/ListCharAndNbOccFunctions.h"
+#include "../FunctionsOfStructures/NodeHuffmanFunctions.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -361,7 +362,7 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 					if (code != NULL)
 					{
 						code[codeSize - 1] = '\0';
-						AddNodeHuffmanInHuffmanTree(&tree, c, code);
+						AddNodeHuffmanInHuffmanTree(&tree, oldC, code);
 					}
 				}
 			}

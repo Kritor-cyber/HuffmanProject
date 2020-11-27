@@ -1,7 +1,9 @@
 #include "Menu.h"
 
+#include "ASCIIToBinary.h"
 #include "Utilities.h"
 #include "Encoding.h"
+#include "Decoding.h"
 #include "FunctionsOfStructures/NodeAVLDictionnaryFunctions.h"
 #include "FunctionsOfStructures/NodeHuffmanFunctions.h"
 #include <stdio.h>
@@ -66,7 +68,7 @@ void StartMenu()
 	int choice;
 	while (!stop)
 	{
-		PrintMenu("What do you want to do ?\n", 3, "Compress a file", "Decompress a file", "Exit");
+		PrintMenu("What do you want to do ?\n", 4, "Compress a file", "Decompress a file", "Convert a file into fake binary", "Exit");
 
 		choice = GetUserChoice();
 		switch (choice)
@@ -77,8 +79,12 @@ void StartMenu()
 			break;
 		case 2:
 			printf("decompression\n");
+			DecompressFile();
 			break;
 		case 3:
+			ConvertIntoFakeBinary();
+			break;
+		case 4:
 			stop = 1;
 			break;
 		default:
@@ -128,7 +134,21 @@ void CompressFile()
 					NodeAVLDictionnary* dictionnary = CreerAVLDictionnaire(huffTree);
 					PrintNodeAVLDictionnary(dictionnary);
 					EncodeFileAVLTree(pathOfFileToCompress, pathOfFileCompressed, dictionnary);
-					printf("Encoding finished\n");
+					
+					FILE* dictionnaryFile = NULL;
+					errno_t err = fopen_s(&dictionnaryFile, "dico.txt", "w");
+					
+					if (err || dictionnaryFile == NULL)
+					{
+						printf("Encoding finished but can't open the file \"dico.txt\" into write mode\n");
+
+						PrintErrorMessageFromErrorCodeFromFile(err);
+					}
+					else
+					{
+						WriteAVLDictionnary(dictionnary, dictionnaryFile);
+						printf("Encoding finished and dictionnary write\n");
+					}
 
 					FreeNodeAVLDictionnary(dictionnary);
 					FreeHuffmanTree(huffTree);
@@ -148,4 +168,35 @@ void CompressFile()
 		}
 		free(pathOfFileToCompress);
 	}
+}
+
+void DecompressFile()
+{
+	char* pathOfCompressedFile = GetStringFromUser("Enter the path of the file you want to decompress : ");
+	if (pathOfCompressedFile != NULL && pathOfCompressedFile[0] != '\0')
+	{
+		char* pathOfDecompressedFile = GetStringFromUser("Enter the path of the decompressed file : ");
+
+		if (pathOfDecompressedFile != NULL && pathOfDecompressedFile[0] != '\0')
+		{
+			NodeHuffman* treeToDecompress = CreateHuffmanTreeFromDictionnaryFile("dico.txt");
+			if (treeToDecompress != NULL)
+			{
+				printf("Decoding %s\n", pathOfCompressedFile);
+				DecodeFromTree(pathOfCompressedFile, pathOfDecompressedFile, treeToDecompress);
+				printf("Decoding finished\n");
+			}
+
+			free(pathOfDecompressedFile);
+		}
+
+		free(pathOfCompressedFile);
+	}
+}
+
+void ConvertIntoFakeBinary()
+{
+	char* path = GetStringFromUser("Enter the path to the file you want to convert into fake binary : ");
+	ConvertFileFromASCIIToBinary(path);
+	free(path);
 }
