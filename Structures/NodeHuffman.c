@@ -318,6 +318,7 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 
 		if (err || dic == NULL)
 		{
+			printf("Error while opening the dictionnary named dico.txt\n");
 			PrintErrorMessageFromErrorCodeFromFile(err);
 			return NULL;
 		}
@@ -351,6 +352,9 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 						{
 							printf("Can't reallocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
 							codeSize = 0;
+							free(code);
+							FreeHuffmanTree(tree);
+							return NULL;
 						}
 						else
 						{
@@ -363,6 +367,7 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 					{
 						code[codeSize - 1] = '\0';
 						AddNodeHuffmanInHuffmanTree(&tree, oldC, code);
+						free(code);
 					}
 				}
 			}

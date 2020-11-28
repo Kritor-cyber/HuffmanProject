@@ -17,7 +17,7 @@ NodeHuffman* NodeHuffmanFromNodeCharAndNbOcc(ListCharAndNbOcc* list);
 void AddNodeHuffmanInArray(NodeHuffman** array, int arrSize, char car, int pos);
 NodeHuffman** CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab);
 
-NodeHuffman** _CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab);
+NodeHuffman** _CreateArrayOfNodeHuffmanWithNbOccFromFile(char* pathOfFile, int* sizeTab);
 
 NodeHuffman* CreateNodeHuffmanFromCharAndNbOccAndChilds(char car, int nbOcc, NodeHuffman* leftChild, NodeHuffman* rightChild);
 NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size);

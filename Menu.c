@@ -127,12 +127,14 @@ void CompressFile()
 
 				NodeHuffman** tabTmp = NULL;
 				int sizeTab;
+
+				// Those two next lines produces the same result but the first one use dichotomy
+				//tabTmp = CreateArrayOfNodeHuffmanWithNbOccFromFile(pathOfFileToCompress, &sizeTab);
 				tabTmp = _CreateArrayOfNodeHuffmanWithNbOccFromFile(pathOfFileToCompress, &sizeTab);
 				if (tabTmp != NULL)
 				{
 					NodeHuffman* huffTree = CreateHuffmanTreeFromArray(tabTmp, sizeTab);
 					NodeAVLDictionnary* dictionnary = CreerAVLDictionnaire(huffTree);
-					PrintNodeAVLDictionnary(dictionnary);
 					EncodeFileAVLTree(pathOfFileToCompress, pathOfFileCompressed, dictionnary);
 					
 					FILE* dictionnaryFile = NULL;
@@ -148,6 +150,7 @@ void CompressFile()
 					{
 						WriteAVLDictionnary(dictionnary, dictionnaryFile);
 						printf("Encoding finished and dictionnary write\n");
+						fclose(dictionnaryFile);
 					}
 
 					FreeNodeAVLDictionnary(dictionnary);
@@ -184,6 +187,7 @@ void DecompressFile()
 			{
 				printf("Decoding %s\n", pathOfCompressedFile);
 				DecodeFromTree(pathOfCompressedFile, pathOfDecompressedFile, treeToDecompress);
+				FreeHuffmanTree(treeToDecompress);
 				printf("Decoding finished\n");
 			}
 
