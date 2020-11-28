@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 
+#define DEBUG 0
+
 ListCharAndNbOcc* CreateNode(char c, int nbOcc)
 {
 	ListCharAndNbOcc* node = (ListCharAndNbOcc*)malloc(sizeof(ListCharAndNbOcc));
@@ -61,74 +63,37 @@ void AddCharToList(ListCharAndNbOcc** list, char c)
 	}
 }
 
-int GetNbOccSum(ListCharAndNbOcc* list)
+ListCharAndNbOcc* GetListCharAndNbOccFromFile(char* path)
 {
-	if (list == NULL)
-		return 0;
-	else
-		return GetNbOccSum(list->next) + list->nbOcc;
-}
+	FILE* fileToRead;
+	errno_t err = fopen_s(&fileToRead, path, "r");
 
-void SortListCharAndNbOccCroissant(ListCharAndNbOcc** list)
-{
-	if (list != NULL && *list != NULL)
+	if (DEBUG) printf("chemin vers le fichier a ouvrir : %s\n", path);
+
+	if (err || fileToRead == NULL)
 	{
-		char sorted = 0;
-		ListCharAndNbOcc* tmp;
+		printf("Can't open file \"%s\"\n", path);
 
-		while (!sorted)
+		PrintErrorMessageFromErrorCodeFromFile(err);
+
+		return NULL;
+	}
+	else
+	{
+		char c;
+		ListCharAndNbOcc* list = NULL;
+		while ((c = getc(fileToRead)) != EOF)
 		{
-			sorted = 1;
-			tmp = *list;
+			AddCharToList(&list, c);
+		}
 
-			while (tmp != NULL && tmp->next != NULL)
-			{
-				if (tmp->nbOcc > tmp->next->nbOcc)
-				{
-					sorted = 0;
-					_SortListCharAndNbOccCroissant(list);
-				}
-				tmp = tmp->next;
-			}
+		fclose(fileToRead);
+
+		if (list != NULL)
+		{
+			return list;
 		}
 	}
-}
 
-static void _SortListCharAndNbOccCroissant(ListCharAndNbOcc** list)
-{
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
-		return 0;
-
-	ListCharAndNbOcc* chr = *list;
-
-	if (chr->nbOcc > chr->next->nbOcc)
-	{
-		ListCharAndNbOcc* temp = chr->next;
-		chr->next = chr->next->next;
-		temp->next = chr;
-		*list = temp;
-		chr = *list;
-	}
-
-	_SortListCharAndNbOccCroissant(&(chr->next));
-}
-
-void PrintList(ListCharAndNbOcc* list)
-{
-	while (list != NULL)
-	{
-		printf("(%c : %d) -> ", list->c, list->nbOcc);
-		list = list->next;
-	}
-
-	printf("\n\n");
-}
-
-void FreeList(ListCharAndNbOcc* list)
-{
-	if (list != NULL)
-	{
-		FreeList(list->next);
-		free(list);
-	}
+	return NULL;
 }

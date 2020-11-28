@@ -1,6 +1,6 @@
 #include "Encoding.h"
 
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "Dictionnary.h"
 #include "Utilities.h"

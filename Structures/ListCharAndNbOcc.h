@@ -7,13 +7,8 @@ typedef struct ListCharAndNbOcc
 	struct ListCharAndNbOcc* next;
 } ListCharAndNbOcc;
 
-ListCharAndNbOcc*	CreateNode					(char c, int nbOcc);
-void				AddNodeToListCharAndNbOcc	(ListCharAndNbOcc** list, char c);
-void				AddCharToList				(ListCharAndNbOcc** list, char c);
+ListCharAndNbOcc* CreateNode(char c, int nbOcc);
+void AddNodeToListCharAndNbOcc(ListCharAndNbOcc** list, char c);
+void AddCharToList(ListCharAndNbOcc** list, char c);
 
-int		GetNbOccSum(ListCharAndNbOcc* list);
-void	SortListCharAndNbOccCroissant(ListCharAndNbOcc** list);
-static void _SortListCharAndNbOccCroissant(ListCharAndNbOcc** list);
-
-void PrintList(ListCharAndNbOcc* list);
-void FreeList(ListCharAndNbOcc* list);
+ListCharAndNbOcc* GetListCharAndNbOccFromFile(char* path);
