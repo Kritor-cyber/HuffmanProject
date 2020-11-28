@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Structures/NodeAVLDictionnary.h"
+#include "Structures/AVLTree.h"
 #include <stdio.h>
 
 int GetMaxCodeSize();
