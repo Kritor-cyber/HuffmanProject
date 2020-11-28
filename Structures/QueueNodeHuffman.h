@@ -11,3 +11,4 @@ typedef struct QueueNodeHuffman
 void InitializeQueue(QueueNodeHuffman** queue);
 void AddDataInQueue(QueueNodeHuffman* queue, NodeHuffman* data);
 NodeHuffman* GetDataFromQueueNodeHuffman(QueueNodeHuffman* queue);
+void FreeQueueNodeHuffman(QueueNodeHuffman* queue);

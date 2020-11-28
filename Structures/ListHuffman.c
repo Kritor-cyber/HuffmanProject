@@ -36,3 +36,13 @@ void AddToListHuffman(ListHuffman** list, NodeHuffman* nodeToAdd)
 		temp->next = CreateNodeListHuffman(nodeToAdd);
 	}
 }
+
+void FreeListHuffman(ListHuffman* list)
+{
+	if (list != NULL)
+	{
+		FreeListHuffman(list->next);
+		free(list->data);
+		free(list);
+	}
+}
