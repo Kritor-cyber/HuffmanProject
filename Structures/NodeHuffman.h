@@ -23,3 +23,5 @@ NodeHuffman* CreateNodeHuffmanFromCharAndNbOccAndChilds(char car, int nbOcc, Nod
 NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size);
 
 NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath);
+
+NodeHuffman* CreateHuffmanTreeFromDictionnaryIntegratedInFile(FILE* fileWithDictionnary);

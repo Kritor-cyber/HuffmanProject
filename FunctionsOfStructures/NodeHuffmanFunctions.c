@@ -171,19 +171,22 @@ void AddNodeHuffmanInHuffmanTree(NodeHuffman** tree, char c, char* code)
 		(*tree) = CreateNodeHuffmanFromChar('\0');
 	}
 
-	if (code != NULL)
+	if (*tree != NULL)
 	{
-		if (code[0] == '\0')
+		if (code != NULL)
 		{
-			(*tree)->c = c;
-		}
-		else if (code[0] == '1')
-		{
-			AddNodeHuffmanInHuffmanTree(&((*tree)->right), c, code + 1);
-		}
-		else if (code[0] == '0')
-		{
-			AddNodeHuffmanInHuffmanTree(&((*tree)->left), c, code + 1);
+			if (code[0] == '\0')
+			{
+				(*tree)->c = c;
+			}
+			else if (code[0] == '1')
+			{
+				AddNodeHuffmanInHuffmanTree(&((*tree)->right), c, code + 1);
+			}
+			else if (code[0] == '0')
+			{
+				AddNodeHuffmanInHuffmanTree(&((*tree)->left), c, code + 1);
+			}
 		}
 	}
 }

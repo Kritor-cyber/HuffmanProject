@@ -15,7 +15,8 @@ NodeHuffman* CreateNodeHuffmanFromChar(char c)
 
 	if (node == NULL)
 		printf("can’t allocate memory to NodeHuffman in createNodeHuffman()\n");
-	else {
+	else
+	{
 		node->c = c;
 		node->nbOcc = 1;
 		node->left = NULL;
@@ -325,50 +326,26 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 		else
 		{
 			NodeHuffman* tree = NULL;
-			char c, oldC = '\0';
+			char c, oldC = '\0', size;
 
 			while ((c = fgetc(dic)) != EOF)
 			{
-				fgetc(dic);
-				fgetc(dic);
-				fgetc(dic);
-
-				char* code = (char*)malloc(sizeof(char));
-				char* newCode = NULL;
+				size = fgetc(dic);
+				char* code = (char*)malloc(sizeof(char) * (size+1));
 				if (code == NULL)
 				{
 					printf("Can't allocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
 				}
 				else
 				{
-					int codeSize = 1;
-					oldC = c;
-
-					while ((c = fgetc(dic)) != '\n')
+					for (int i = 0; i < size; i++)
 					{
-						codeSize++;
-						newCode = (char*)realloc(code, sizeof(char) * codeSize);
-						if (newCode == NULL)
-						{
-							printf("Can't reallocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
-							codeSize = 0;
-							free(code);
-							FreeHuffmanTree(tree);
-							return NULL;
-						}
-						else
-						{
-							code = newCode;
-							code[codeSize - 2] = c;
-						}
+						code[i] = fgetc(dic);
 					}
+					code[size] = '\0';
 
-					if (code != NULL)
-					{
-						code[codeSize - 1] = '\0';
-						AddNodeHuffmanInHuffmanTree(&tree, oldC, code);
-						free(code);
-					}
+					AddNodeHuffmanInHuffmanTree(&tree, c, code);
+					free(code);
 				}
 			}
 
@@ -377,4 +354,35 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 	}
 
 	return NULL;
+}
+
+NodeHuffman* CreateHuffmanTreeFromDictionnaryIntegratedInFile(FILE* fileWithDictionnary)
+{
+	NodeHuffman* tree = NULL;
+	char c, firstC = '\0', size;
+
+	while ((c = fgetc(fileWithDictionnary)) != firstC)
+	{
+		if (firstC == '\0')
+			firstC = c;
+		size = fgetc(fileWithDictionnary);
+		char* code = (char*)malloc(sizeof(char) * (size + 1));
+		if (code == NULL)
+		{
+			printf("Can't allocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+		}
+		else
+		{
+			for (int i = 0; i < size; i++)
+			{
+				code[i] = fgetc(fileWithDictionnary);
+			}
+			code[size] = '\0';
+
+			AddNodeHuffmanInHuffmanTree(&tree, c, code);
+			free(code);
+		}
+	}
+
+	return tree;
 }

@@ -99,7 +99,7 @@ void EncodeFileAVLTree(char* pathOfFileToCompress, char* pathOfFileCompressed, N
 	else
 	{
 		FILE* fileCompressed = NULL;
-		err = fopen_s(&fileCompressed, pathOfFileCompressed, "w");
+		err = fopen_s(&fileCompressed, pathOfFileCompressed, "a");
 		if (err || fileCompressed == NULL)
 		{
 			printf("Can't open file %s for read\n", pathOfFileCompressed);
@@ -128,7 +128,11 @@ void WriteAVLDictionnary(NodeAVLDictionnary* tree, FILE* dic)
 {
 	if (tree != NULL)
 	{
-		fprintf_s(dic, "%c : %s\n", tree->c, tree->code);
+		int codeSize = 0;
+		while (tree->code[codeSize] != '\0')
+			codeSize++;
+
+		fprintf_s(dic, "%c%c%s\0", tree->c, codeSize, tree->code);
 		WriteAVLDictionnary(tree->left, dic);
 		WriteAVLDictionnary(tree->right, dic);
 	}
