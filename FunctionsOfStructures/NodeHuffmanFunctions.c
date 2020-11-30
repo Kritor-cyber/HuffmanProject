@@ -61,7 +61,7 @@ void WriteDictionnary(NodeHuffman* tree)
 	else
 	{
 		FILE* dic = NULL;
-		errno_t err = fopen_s(&dic, "dico.txt", "w");
+		errno_t err = fopen_s(&dic, "dico.txt", "wb");
 
 		if (err || dic == NULL)
 		{
@@ -115,9 +115,7 @@ int IsSuperior(const NodeHuffman** noeud1, const NodeHuffman** noeud2)
 
 void SortArrayByNbOcc(NodeHuffman** array, int size)
 {
-	printf("avant : %p\n", *array);
 	qsort(array, size, sizeof(NodeHuffman*), IsSuperior);
-	printf("apres : %p\n", *array);
 }
 
 void UpdateArrayNextHuffmanNodes(NodeHuffman** array, int size, QueueNodeHuffman* l1, QueueNodeHuffman* l2)
@@ -178,6 +176,7 @@ void AddNodeHuffmanInHuffmanTree(NodeHuffman** tree, char c, char* code)
 			if (code[0] == '\0')
 			{
 				(*tree)->c = c;
+				(*tree)->nbOcc = 1;
 			}
 			else if (code[0] == '1')
 			{

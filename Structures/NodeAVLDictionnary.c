@@ -125,11 +125,16 @@ void _CreerAVLDictionnaire(NodeHuffman* actualNode, char* code, int codeSize, No
 							newCode[codeSize - 2] = '0';
 							_CreerAVLDictionnaire(actualNode->left, newCode, codeSize, tree);
 						}
+						else
+							printf("This should never happened (in _CreerAVLDictionnaire in NodeAVLDictionnary.c, the first)\n");
+
 						if (actualNode->right != NULL)
 						{
 							newCode2[codeSize - 2] = '1';
 							_CreerAVLDictionnaire(actualNode->right, newCode2, codeSize, tree);
 						}
+						else
+							printf("This should never happened (in _CreerAVLDictionnaire in NodeAVLDictionnary.c, the second)\n");
 					}
 				}
 			}

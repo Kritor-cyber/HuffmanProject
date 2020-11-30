@@ -1,6 +1,8 @@
 #include "ListCharAndNbOcc.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include "../Utilities.h"
 
 #define DEBUG 0
 
@@ -66,7 +68,7 @@ void AddCharToList(ListCharAndNbOcc** list, char c)
 ListCharAndNbOcc* GetListCharAndNbOccFromFile(char* path)
 {
 	FILE* fileToRead;
-	errno_t err = fopen_s(&fileToRead, path, "r");
+	errno_t err = fopen_s(&fileToRead, path, "rb");
 
 	if (DEBUG) printf("chemin vers le fichier a ouvrir : %s\n", path);
 

@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include "ListCharAndNbOcc.h"
+#include "BinaryFile.h"
 
 typedef struct NodeHuffman
 {
@@ -24,4 +25,4 @@ NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size);
 
 NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath);
 
-NodeHuffman* CreateHuffmanTreeFromDictionnaryIntegratedInFile(FILE* fileWithDictionnary);
+NodeHuffman* CreateHuffmanTreeFromDictionnaryIntegratedInFile(BinaryFile* binaryFileWithDictionnary);

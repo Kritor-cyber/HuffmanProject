@@ -3,11 +3,12 @@
 #include <stdio.h>
 #include "Utilities.h"
 #include "FunctionsOfStructures/NodeHuffmanFunctions.h"
+#include "Structures/BinaryFile.h"
 
 void DecodeFromTree(const char* pathToTheFileToDecode, const char* pathToTheDecodedFile, NodeHuffman* tree)
 {
 	FILE* fileToDecode = NULL;
-	errno_t err = fopen_s(&fileToDecode, pathToTheFileToDecode, "r");
+	errno_t err = fopen_s(&fileToDecode, pathToTheFileToDecode, "rb");
 	
 	if (err || fileToDecode == NULL)
 	{
@@ -17,7 +18,7 @@ void DecodeFromTree(const char* pathToTheFileToDecode, const char* pathToTheDeco
 	else
 	{
 		FILE* fileDecoded = NULL;
-		err = fopen_s(&fileDecoded, pathToTheDecodedFile, "w");
+		err = fopen_s(&fileDecoded, pathToTheDecodedFile, "wb");
 
 		if (err || fileDecoded == NULL)
 		{
@@ -59,20 +60,18 @@ void DecodeFromTree(const char* pathToTheFileToDecode, const char* pathToTheDeco
 	}
 }
 
-void DecodeCompressedFileWithIntegratedTree(const char* pathToTheFileToDecode, const char* pathToTheDecodedFile)
+void DecodeCompressedFileWithIntegratedTree(char* pathToTheFileToDecode, char* pathToTheDecodedFile)
 {
-	FILE* fileToDecode = NULL;
-	errno_t err = fopen_s(&fileToDecode, pathToTheFileToDecode, "r");
+	BinaryFile* binaryFileToDecode = OpenBinaryFile(pathToTheFileToDecode, "rb");
 
-	if (err || fileToDecode == NULL)
+	if (binaryFileToDecode == NULL)
 	{
 		printf("Error while opening \"%s\" to decode\n", pathToTheFileToDecode);
-		PrintErrorMessageFromErrorCodeFromFile(err);
 	}
 	else
 	{
 		FILE* fileDecoded = NULL;
-		err = fopen_s(&fileDecoded, pathToTheDecodedFile, "w");
+		errno_t err = fopen_s(&fileDecoded, pathToTheDecodedFile, "wb");
 
 		if (err || fileDecoded == NULL)
 		{
@@ -81,14 +80,15 @@ void DecodeCompressedFileWithIntegratedTree(const char* pathToTheFileToDecode, c
 		}
 		else
 		{
-			NodeHuffman* tree = CreateHuffmanTreeFromDictionnaryIntegratedInFile(fileToDecode);
+			NodeHuffman* tree = CreateHuffmanTreeFromDictionnaryIntegratedInFile(binaryFileToDecode);
 
 			if (tree != NULL)
 			{
 				char c;
 				NodeHuffman* tmpHuffmanTree = tree;
 
-				while ((c = fgetc(fileToDecode)) != EOF)
+				char end = 0;
+				while (!end && (c = GetFakeBitFromBinaryFile(binaryFileToDecode)) != EOF)
 				{
 					if (c == '0')
 					{
@@ -110,6 +110,11 @@ void DecodeCompressedFileWithIntegratedTree(const char* pathToTheFileToDecode, c
 							tmpHuffmanTree = tree;
 						}
 					}
+					else if (tmpHuffmanTree->nbOcc != 0)
+					{
+						printf("fin du fichier\n");
+						end = 1;
+					}
 				}
 
 				FreeHuffmanTree(tree);
@@ -117,6 +122,6 @@ void DecodeCompressedFileWithIntegratedTree(const char* pathToTheFileToDecode, c
 
 			fclose(fileDecoded);
 		}
-		fclose(fileToDecode);
+		CloseBinaryFile(binaryFileToDecode);
 	}
 }

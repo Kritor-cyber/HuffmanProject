@@ -4,4 +4,4 @@
 
 void DecodeFromTree(const char* pathToTheFileToDecode, const char* pathToTheDecodedFile, NodeHuffman* tree);
 
-void DecodeCompressedFileWithIntegratedTree(const char* pathToTheFileToDecode, const char* pathToTheDecodedFile);
+void DecodeCompressedFileWithIntegratedTree(char* pathToTheFileToDecode, char* pathToTheDecodedFile);
