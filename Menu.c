@@ -10,11 +10,18 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+#include "Structures/BinaryFile.h"
+
 #define DEBUG 1
+
+void CleanScreen()
+{
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+}
 
 void PrintMenu(const char* intro, int nbChoice, ...)
 {
-	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	CleanScreen();
 	
 
     va_list args;
@@ -74,14 +81,17 @@ void StartMenu()
 		switch (choice)
 		{
 		case 1:
-			printf("compression\n");
+			CleanScreen();
+			printf("Compression\n\n\n");
 			CompressFile();
 			break;
 		case 2:
-			printf("decompression\n");
+			CleanScreen();
+			printf("Decompression\n\n\n");
 			DecompressFile();
 			break;
 		case 3:
+			CleanScreen();
 			ConvertIntoFakeBinary();
 			break;
 		case 4:
@@ -133,26 +143,32 @@ void CompressFile()
 				tabTmp = _CreateArrayOfNodeHuffmanWithNbOccFromFile(pathOfFileToCompress, &sizeTab);
 				if (tabTmp != NULL)
 				{
+					SortArrayByNbOcc(tabTmp, sizeTab);
 					NodeHuffman* huffTree = CreateHuffmanTreeFromArray(tabTmp, sizeTab);
 					NodeAVLDictionnary* dictionnary = CreerAVLDictionnaire(huffTree);
-					EncodeFileAVLTree(pathOfFileToCompress, pathOfFileCompressed, dictionnary);
-					
-					FILE* dictionnaryFile = NULL;
-					errno_t err = fopen_s(&dictionnaryFile, "dico.txt", "w");
-					
-					if (err || dictionnaryFile == NULL)
-					{
-						printf("Encoding finished but can't open the file \"dico.txt\" into write mode\n");
 
-						PrintErrorMessageFromErrorCodeFromFile(err);
+					BinaryFile* compressedFileWithDictionnary = OpenBinaryFile(pathOfFileCompressed, "wb");
+
+					if (compressedFileWithDictionnary == NULL)
+					{
+						printf("Can't open the binary file \"%s\" into write mode to write dictionnary\n", pathOfFileCompressed);
 					}
 					else
 					{
-						WriteAVLDictionnary(dictionnary, dictionnaryFile);
-						printf("Encoding finished and dictionnary write\n");
-						fclose(dictionnaryFile);
-					}
+						WriteAVLDictionnary(dictionnary, compressedFileWithDictionnary);
+						WriteCharIntoBinaryFile(compressedFileWithDictionnary, dictionnary->c);
 
+						EncodeFileAVLTree(pathOfFileToCompress, compressedFileWithDictionnary, dictionnary);
+
+						char* code = NULL;
+						code = GetCharCodeFromAVLDic(dictionnary, '\0');
+						WriteFakeBitsIntoBinaryFile(compressedFileWithDictionnary, code);
+						ForceWriteBits(compressedFileWithDictionnary);
+
+						printf("Encoding finished and dictionnary write\n");
+					}
+					
+					CloseBinaryFile(compressedFileWithDictionnary);
 					FreeNodeAVLDictionnary(dictionnary);
 					FreeHuffmanTree(huffTree);
 					free(tabTmp);
@@ -182,14 +198,9 @@ void DecompressFile()
 
 		if (pathOfDecompressedFile != NULL && pathOfDecompressedFile[0] != '\0')
 		{
-			NodeHuffman* treeToDecompress = CreateHuffmanTreeFromDictionnaryFile("dico.txt");
-			if (treeToDecompress != NULL)
-			{
-				printf("Decoding %s\n", pathOfCompressedFile);
-				DecodeFromTree(pathOfCompressedFile, pathOfDecompressedFile, treeToDecompress);
-				FreeHuffmanTree(treeToDecompress);
-				printf("Decoding finished\n");
-			}
+			printf("Decoding %s\n", pathOfCompressedFile);
+			DecodeCompressedFileWithIntegratedTree(pathOfCompressedFile, pathOfDecompressedFile);
+			printf("Decoding finished\n");
 
 			free(pathOfDecompressedFile);
 		}

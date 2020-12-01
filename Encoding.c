@@ -44,7 +44,7 @@ void GetCharCodeFromDic(FILE* dic, char c, char* code)
 void EncodeFile(char* pathOfFileToCompress, char* pathOfFileCompressed, FILE* dic)
 {
 	FILE* fileToCompress = NULL;
-	errno_t err = fopen_s(&fileToCompress, pathOfFileToCompress, "r");
+	errno_t err = fopen_s(&fileToCompress, pathOfFileToCompress, "rb");
 	if (err || fileToCompress == NULL)
 	{
 		printf("Can't open file %s for read\n", pathOfFileToCompress);
@@ -53,7 +53,7 @@ void EncodeFile(char* pathOfFileToCompress, char* pathOfFileCompressed, FILE* di
 	else
 	{
 		FILE* fileCompressed = NULL;
-		err = fopen_s(&fileCompressed, pathOfFileCompressed, "w");
+		err = fopen_s(&fileCompressed, pathOfFileCompressed, "wb");
 		if (err || fileCompressed == NULL)
 		{
 			printf("Can't open file %s for read\n", pathOfFileCompressed);
@@ -87,10 +87,10 @@ void EncodeFile(char* pathOfFileToCompress, char* pathOfFileCompressed, FILE* di
 	}
 }
 
-void EncodeFileAVLTree(char* pathOfFileToCompress, char* pathOfFileCompressed, NodeAVLDictionnary* dic)
+void EncodeFileAVLTree(char* pathOfFileToCompress, BinaryFile* compressedFile, NodeAVLDictionnary* dic)
 {
 	FILE* fileToCompress = NULL;
-	errno_t err = fopen_s(&fileToCompress, pathOfFileToCompress, "r");
+	errno_t err = fopen_s(&fileToCompress, pathOfFileToCompress, "rb");
 	if (err || fileToCompress == NULL)
 	{
 		printf("Can't open file %s for read\n", pathOfFileToCompress);
@@ -98,38 +98,33 @@ void EncodeFileAVLTree(char* pathOfFileToCompress, char* pathOfFileCompressed, N
 	}
 	else
 	{
-		FILE* fileCompressed = NULL;
-		err = fopen_s(&fileCompressed, pathOfFileCompressed, "w");
-		if (err || fileCompressed == NULL)
+		char c;
+		char* code = NULL;
+		while ((c = fgetc(fileToCompress)) != EOF)
 		{
-			printf("Can't open file %s for read\n", pathOfFileCompressed);
-			PrintErrorMessageFromErrorCodeFromFile(err);
+			code = GetCharCodeFromAVLDic(dic, c);
+			WriteFakeBitsIntoBinaryFile(compressedFile, code);
 		}
-		else
-		{
-			char c;
-			char* code = NULL;
-			while ((c = fgetc(fileToCompress)) != EOF)
-			{
-				code = GetCharCodeFromAVLDic(dic, c);
-				if (fprintf_s(fileCompressed, "%s", code) < 0)
-				{
-					printf("Error while writing into the compressed file\n");
-				}
-			}
 
-			fclose(fileCompressed);
-		}
 		fclose(fileToCompress);
 	}
 }
 
-void WriteAVLDictionnary(NodeAVLDictionnary* tree, FILE* dic)
+void WriteAVLDictionnary(NodeAVLDictionnary* tree, BinaryFile* fileWithDic)
 {
 	if (tree != NULL)
 	{
-		fprintf_s(dic, "%c : %s\n", tree->c, tree->code);
-		WriteAVLDictionnary(tree->left, dic);
-		WriteAVLDictionnary(tree->right, dic);
+		char codeSize = 0;
+		while (tree->code[codeSize] != '\0')
+			codeSize++;
+		if (codeSize == 0) printf("CODE SIZE = 0\n");
+
+		WriteCharIntoBinaryFile(fileWithDic, tree->c);
+		WriteCharIntoBinaryFile(fileWithDic, codeSize);
+
+		WriteFakeBitsIntoBinaryFile(fileWithDic, tree->code);
+
+		WriteAVLDictionnary(tree->left, fileWithDic);
+		WriteAVLDictionnary(tree->right, fileWithDic);
 	}
 }

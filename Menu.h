@@ -1,5 +1,7 @@
 #pragma once
 
+void CleanScreen();
+
 void PrintMenu(const char* intro, int nbChoice, ...);
 
 int GetUserChoice();

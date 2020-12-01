@@ -115,3 +115,35 @@ int GetNumberCharInFile(char* path)
 
 	return nbCharInFile;
 }
+
+void WriteInBinary(FILE* file, char* string)
+{
+	int cp = 0;
+	char binary = 0;
+
+	while (string[cp] != '\0')
+	{
+		binary = binary << 1;
+		if (string[cp] == '1')
+		{
+			binary = binary | 0b00000001;
+		}
+		else if (string[cp] != '0')
+		{
+			printf("To convert fake binary to real binary, the string needs to be only composed by '0' and '1' (no %c)\n", string[cp]);
+		}
+
+		if (cp % 8 == 0 && cp != 0)
+		{
+			fprintf(file, "%c", binary);
+			binary = 0;
+		}
+
+		cp++;
+	}
+
+	if ((cp-1) % 8 != 0)
+	{
+		fprintf(file, "%c", binary);
+	}
+}
