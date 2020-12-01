@@ -148,16 +148,16 @@ NodeHuffman** CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab)
 	else
 	{
 		char car;
-		int start, end, mid, found;
-		int tabOcc[256] = { 0 };
+		//int start, end, mid, found;
+		//int tabOcc[256] = { 0 };
 		*sizeTab = 0;
 
 		while ((car = fgetc(f)) != EOF)
 		{
-			start = 0;
-			end = *sizeTab;
-			found = 0;
-			mid = 0;
+			int start = 0;
+			int end = *sizeTab;
+			int found = 0;
+			int mid = 0;
 
 			while (found == 0 && start <= end) {
 				mid = (start + end) / 2;
@@ -341,15 +341,15 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 		else
 		{
 			NodeHuffman* tree = NULL;
-			char c, oldC = '\0', size;
+			char c;// , oldC = '\0';// , size;
 
 			while ((c = fgetc(dic)) != EOF)
 			{
-				size = fgetc(dic);
+				int size = fgetc(dic);
 				char* code = (char*)malloc(sizeof(char) * (size+1));
 				if (code == NULL)
 				{
-					printf("Can't allocate memory to code in CreateDictionnaryNodeAVLDictionnary() in Dictionnary.c\n");
+					printf("Can't allocate memory to code in CreateDictionnaryNodeAVLDictionnary() in NodeHuffman.c\n");
 				}
 				else
 				{
@@ -374,13 +374,13 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 NodeHuffman* CreateHuffmanTreeFromDictionnaryIntegratedInFile(BinaryFile* binaryFileWithDictionnary)
 {
 	NodeHuffman* tree = NULL;
-	char c, firstC = '\0', size;
+	char c, firstC = '\0';// , size;
 
 	while ((c = GetCharFromBinaryFile(binaryFileWithDictionnary)) != firstC)
 	{
 		if (firstC == '\0')
 			firstC = c;
-		size = GetCharFromBinaryFile(binaryFileWithDictionnary);
+		int size = GetCharFromBinaryFile(binaryFileWithDictionnary);
 		char* code = (char*)malloc(sizeof(char) * (size + 1));
 		if (code == NULL)
 		{

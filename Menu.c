@@ -41,7 +41,12 @@ int GetUserChoice()
 {
     printf("\nEnter your choice : ");
     int choice = -1;
-	int result = scanf_s("%d", &choice);
+
+	if (scanf_s("%d", &choice) == 0)
+	{
+		printf("An error occured while reading your choice\n");
+	}
+
 	CleanInputBuffer();
 
     return choice;
@@ -72,12 +77,11 @@ char* GetStringFromUser(const char* msg)
 void StartMenu()
 {
 	char stop = 0;
-	int choice;
 	while (!stop)
 	{
 		PrintMenu("What do you want to do ?\n", 4, "Compress a file", "Decompress a file", "Convert a file into fake binary", "Exit");
 
-		choice = GetUserChoice();
+		int choice = GetUserChoice();
 		switch (choice)
 		{
 		case 1:

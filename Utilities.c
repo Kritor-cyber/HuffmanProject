@@ -25,7 +25,7 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 	char* fileNameExtension = strrchr(fileName, '.');
 	if (fileNameExtension == NULL)
 	{
-		fileNameExtension = fileName + strnlen_s(fileName, -1);
+		fileNameExtension = fileName + strnlen_s(fileName, 0);
 		if (fileNameExtension < fileName)
 		{
 			printf("error to find last char of file name without extension\n");
@@ -34,8 +34,8 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 	}
 	if (DEBUG) printf("%s\n", fileNameExtension);
 
-	size_t resultSize = strnlen_s(fileName, -2) + strnlen_s(stringToAdd, -2) + 1;
-	if (resultSize < strnlen_s(fileName, -1) || resultSize < strnlen_s(stringToAdd, -1))
+	size_t resultSize = strnlen_s(fileName, 32) + strnlen_s(stringToAdd, 32) + 1;
+	if (resultSize < strnlen_s(fileName, 32) || resultSize < strnlen_s(stringToAdd, 32))
 	{
 		printf("error to define result size\n");
 		exit(13);
@@ -49,7 +49,7 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 	}
 	else
 	{
-		if (DEBUG) printf("%d nb cara avant extension\n", fileNameExtension - (fileName));
+		if (DEBUG) printf("%d nb cara avant extension\n", (int) (fileNameExtension - (fileName)));
 		errno_t err = strncpy_s(result, resultSize, fileName, (fileNameExtension - (fileName)));
 		if (err != 0)
 		{
@@ -69,6 +69,11 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 		if (DEBUG) printf("nouveau nom fichier sans extension : %s\n", result);
 
 		err = strcat_s(result, resultSize, fileNameExtension);
+
+		if (err)
+		{
+			printf("An error occured while adding string before extension of file name (error : %d)\n", err);
+		}
 
 		if (DEBUG) printf("nouveau nom fichier : %s\n", result);
 
