@@ -38,7 +38,7 @@ void ConvertFileFromASCIIToBinary(char* path)
 	{
 		char* pathToBinary = AddStringBeforeExtensionOfFileName(path, "_binary");
 		if (DEBUG) printf("chemin vers le fichier a ecrire : %s\n", pathToBinary);
-		FILE* fileToWrite;
+		FILE* fileToWrite = NULL;
 		err = fopen_s(&fileToWrite, pathToBinary, "w");
 
 		if (err || fileToWrite == NULL)
@@ -49,15 +49,38 @@ void ConvertFileFromASCIIToBinary(char* path)
 		}
 		else
 		{
-			char binaryResult[8];
-			char c;
-			while ((c = getc(fileToRead)) != EOF)
-			{
-				CharacterToBinary(binaryResult, c);
-				if (DEBUG) printf("%c : %.*s\n", c, 8, binaryResult);
-				fwrite(binaryResult, sizeof(char), 8, fileToWrite);
-			}
 
+			char* pathToRealBinary = AddStringBeforeExtensionOfFileName(path, "_real_binary");
+			if (pathToRealBinary != NULL)
+			{
+				FILE* realBinaryFileToWrite = NULL;
+				err = fopen_s(&realBinaryFileToWrite, pathToRealBinary, "w");
+
+				if (err || realBinaryFileToWrite == NULL)
+				{
+					printf("Can't open file \"%s\"\n", pathToRealBinary);
+
+					PrintErrorMessageFromErrorCodeFromFile(err);
+				}
+				else
+				{
+
+					char binaryResult[9];
+					binaryResult[8] = '\0';
+					char c;
+					while ((c = getc(fileToRead)) != EOF)
+					{
+						CharacterToBinary(binaryResult, c);
+						if (DEBUG) printf("%c : %.*s\n", c, 8, binaryResult);
+						fwrite(binaryResult, sizeof(char), 8, fileToWrite);
+
+						WriteInBinary(realBinaryFileToWrite, binaryResult);
+					}
+
+					fclose(realBinaryFileToWrite);
+					free(pathToRealBinary);
+				}
+			}
 			fclose(fileToWrite);
 		}
 
