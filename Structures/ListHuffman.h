@@ -9,5 +9,5 @@ typedef struct ListHuffman
 } ListHuffman;
 
 ListHuffman* CreateNodeListHuffman(NodeHuffman* data);
-void AddToListHuffman(ListHuffman** list, NodeHuffman* node);
+void AddToListHuffman(ListHuffman** list, NodeHuffman* nodeToAdd);
 void FreeListHuffman(ListHuffman* list);
