@@ -1,6 +1,7 @@
 #include "Utilities.h"
 
 #include "Structures/ListCharAndNbOcc.h"
+#include <stdlib.h>
 #include <string.h>
 
 #define DEBUG 0
@@ -29,7 +30,7 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 		if (fileNameExtension < fileName)
 		{
 			printf("error to find last char of file name without extension\n");
-			exit(13);
+			return NULL;
 		}
 	}
 	if (DEBUG) printf("%s\n", fileNameExtension);
@@ -38,14 +39,14 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 	if (resultSize < strnlen_s(fileName, 32) || resultSize < strnlen_s(stringToAdd, 32))
 	{
 		printf("error to define result size\n");
-		exit(13);
+		return NULL;
 	}
 
 	char* result = (char*)malloc(sizeof(char) * resultSize);
 	if (result == NULL)
 	{
 		printf("error can't allocate memory to result\n");
-		exit(13);
+		return NULL;
 	}
 	else
 	{
@@ -54,7 +55,8 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 		if (err != 0)
 		{
 			printf("error to copy file name\n");
-			exit(13);
+			free(result);
+			return NULL;
 		}
 
 		if (DEBUG) printf("nom fichier sans extension : %s\n", result);
@@ -63,7 +65,8 @@ char* AddStringBeforeExtensionOfFileName(char* fileName, char* stringToAdd)
 		if (err != 0)
 		{
 			printf("error to concatenate file name\n");
-			exit(13);
+			free(result);
+			return NULL;
 		}
 
 		if (DEBUG) printf("nouveau nom fichier sans extension : %s\n", result);

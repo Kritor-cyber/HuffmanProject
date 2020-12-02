@@ -66,12 +66,3 @@ void PrintList(ListCharAndNbOcc* list)
 
 	printf("\n\n");
 }
-
-void FreeList(ListCharAndNbOcc* list)
-{
-	if (list != NULL)
-	{
-		FreeList(list->next);
-		free(list);
-	}
-}

@@ -7,4 +7,3 @@ void SortListCharAndNbOccCroissant(ListCharAndNbOcc** list);
 static void _SortListCharAndNbOccCroissant(ListCharAndNbOcc** list);
 
 void PrintList(ListCharAndNbOcc* list);
-void FreeList(ListCharAndNbOcc* list);

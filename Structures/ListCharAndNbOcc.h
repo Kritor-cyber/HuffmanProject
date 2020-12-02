@@ -11,4 +11,6 @@ ListCharAndNbOcc* CreateNode(char c, int nbOcc);
 void AddNodeToListCharAndNbOcc(ListCharAndNbOcc** list, char c);
 void AddCharToList(ListCharAndNbOcc** list, char c);
 
+void FreeList(ListCharAndNbOcc* list);
+
 ListCharAndNbOcc* GetListCharAndNbOccFromFile(char* path);
