@@ -48,7 +48,7 @@ NodeAVLDictionnary* CreateAVLDictionnary(NodeHuffman* tree);
 * \brief Function that copies the new code into the AVLDictionnary and creates an AVL Dictionnary node if current node is an external node.
 * \n Example :
 * \code{.c}
-* _CreateAVLDictionnary(node, code, entier, tree);
+* _CreateAVLDictionnary(node, code, whole_number, tree);
 * \endcode
 * \param actualNode is the current node the function uses.
 * \param code is the character's code.

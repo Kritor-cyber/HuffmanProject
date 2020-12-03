@@ -22,7 +22,7 @@ typedef struct ListCharAndNbOcc
 * \brief Function for creating a node pointing at a character, its occurence and a next node. 
 * \n Example :
 * \code{.c}
-* CreateNode('c', entier);
+* CreateNode('c', whole_number);
 * \endcode
 * \param c is the character.
 * \param nbOcc is the number of occurences.
