@@ -50,9 +50,9 @@ NodeAVLDictionnary* CreateAVLDictionnary(NodeHuffman* tree);
 * \code{.c}
 * _CreateAVLDictionnary(node, code, 'codeSize', tree);
 * \endcode
-* \param node is the current node the function uses.
+* \param actualNode is the current node the function uses.
 * \param code is the character's code.
-* \param codesize is the size of the character's code.
+* \param codeSize is the size of the character's code.
 * \param tree is the AVLDictionnary tree node the function uses.
 */
 void _CreateAVLDictionnary(NodeHuffman* actualNode, char* code, int codeSize, NodeAVLDictionnary** tree);
@@ -63,7 +63,7 @@ void _CreateAVLDictionnary(NodeHuffman* actualNode, char* code, int codeSize, No
 * \code{.c}
 * GetCharCodeFromAVLDic(dictionnary, 'c');
 * \endcode
-* \param dictionnary is the AVLDictionnary pointing at the characters and the codes.
+* \param dic is the AVLDictionnary pointing at the characters and the codes.
 * \param c is the character the function searches the code for.
 * \return the code of the character.
 */
