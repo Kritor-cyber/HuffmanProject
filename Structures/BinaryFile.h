@@ -24,7 +24,7 @@ typedef struct BinaryFile
 * \brief Function opening a binary file.
 * \n Example :
 * \code{.c}
-* OpenBinaryFile(path, mode);
+* OpenBinaryFile(path, "rb");
 * \endcode
 * \param path is the path to the binary file.
 * \param mode is the mode of opening the binary file.

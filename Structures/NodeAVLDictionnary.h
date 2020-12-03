@@ -25,7 +25,7 @@ typedef struct NodeAVLDictionnary
 * \brief Function that creates an AVL Dictionnary Node.
 * \n Example :
 * \code{.c}
-* AddNodeInNodeDictionnary(dic, 'c', code);
+* AddNodeInNodeDictionnary(&dictionnary, 'c', code);
 * \endcode
 * \param dic is the pointer and new node added to the AVL Dictionnary.
 * \param c is the character affected and pointed by dic.
@@ -48,7 +48,7 @@ NodeAVLDictionnary* CreateAVLDictionnary(NodeHuffman* tree);
 * \brief Function that copies the new code into the AVLDictionnary and creates an AVL Dictionnary node if current node is an external node.
 * \n Example :
 * \code{.c}
-* _CreateAVLDictionnary(node, code, 'codeSize', tree);
+* _CreateAVLDictionnary(node, code, whole_number, tree);
 * \endcode
 * \param actualNode is the current node the function uses.
 * \param code is the character's code.
