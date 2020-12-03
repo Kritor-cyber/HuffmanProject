@@ -149,7 +149,7 @@ void CompressFile()
 				{
 					SortArrayByNbOcc(tabTmp, sizeTab);
 					NodeHuffman* huffTree = CreateHuffmanTreeFromArray(tabTmp, sizeTab);
-					NodeAVLDictionnary* dictionnary = CreerAVLDictionnaire(huffTree);
+					NodeAVLDictionnary* dictionnary = CreateAVLDictionnary(huffTree);
 
 					BinaryFile* compressedFileWithDictionnary = OpenBinaryFile(pathOfFileCompressed, "wb");
 
