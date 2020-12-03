@@ -65,6 +65,15 @@ void AddCharToList(ListCharAndNbOcc** list, char c)
 	}
 }
 
+void FreeList(ListCharAndNbOcc* list)
+{
+	if (list != NULL)
+	{
+		FreeList(list->next);
+		free(list);
+	}
+}
+
 ListCharAndNbOcc* GetListCharAndNbOccFromFile(char* path)
 {
 	FILE* fileToRead;

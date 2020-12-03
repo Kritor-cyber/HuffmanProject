@@ -20,7 +20,7 @@
   * \return the depth of the AVL.
   * \return -1 if the AVL is NULL.
   */
-int _AVLDepth(NodeAVLDictionnary* tree);
+static int _AVLDepth(NodeAVLDictionnary* tree);
 
 /**
  * \brief Function which return the balance factor of an AVL.
@@ -32,7 +32,7 @@ int _AVLDepth(NodeAVLDictionnary* tree);
  * \return the balance factor of the AVL.
  * \return 0 if the AVL is NULL.
  */
-int _AVLBalanceFactor(NodeAVLDictionnary* tree);
+static int _AVLBalanceFactor(NodeAVLDictionnary* tree);
 
 /**
  * \brief Function to do a right rotation on an AVL.
@@ -42,7 +42,7 @@ int _AVLBalanceFactor(NodeAVLDictionnary* tree);
  *		\endcode
  * \param tree is a double pointer on the AVL where it does a right rotation.
  */
-void _AVLRightRotation(NodeAVLDictionnary** tree);
+static void _AVLRightRotation(NodeAVLDictionnary** tree);
 
 /**
  * \brief Function to do a left rotation on an AVL.
@@ -52,7 +52,7 @@ void _AVLRightRotation(NodeAVLDictionnary** tree);
  *		\endcode
  * \param tree is a pointer on the AVL where it does a left rotation.
  */
-void _AVLLeftRotation(NodeAVLDictionnary** tree);
+static void _AVLLeftRotation(NodeAVLDictionnary** tree);
 
 /**
  * \brief Function to balance an AVL.

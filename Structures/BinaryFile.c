@@ -64,7 +64,7 @@ void WriteFakeBitIntoBinaryFile(BinaryFile* file, char fakeBit)
 
 void ForceWriteBits(BinaryFile* file)
 {
-	while (file->buffer != 0)
+	while (file->sizeBuffer != 0)
 	{
 		WriteFakeBitIntoBinaryFile(file, '0');
 	}
