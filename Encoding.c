@@ -27,21 +27,21 @@ void EncodeFileAVLTree(char* pathOfFileToCompress, BinaryFile* compressedFile, N
 	}
 }
 
-void WriteAVLDictionnary(NodeAVLDictionnary* tree, BinaryFile* fileWithDic)
+void WriteAVLDictionnary(NodeAVLDictionnary* dictionnary, BinaryFile* fileWithDic)
 {
-	if (tree != NULL)
+	if (dictionnary != NULL)
 	{
 		char codeSize = 0;
-		while (tree->code[codeSize] != '\0')
+		while (dictionnary->code[codeSize] != '\0')
 			codeSize++;
 		if (codeSize == 0) printf("CODE SIZE = 0\n");
 
-		WriteCharIntoBinaryFile(fileWithDic, tree->c);
+		WriteCharIntoBinaryFile(fileWithDic, dictionnary->c);
 		WriteCharIntoBinaryFile(fileWithDic, codeSize);
 
-		WriteFakeBitsIntoBinaryFile(fileWithDic, tree->code);
+		WriteFakeBitsIntoBinaryFile(fileWithDic, dictionnary->code);
 
-		WriteAVLDictionnary(tree->left, fileWithDic);
-		WriteAVLDictionnary(tree->right, fileWithDic);
+		WriteAVLDictionnary(dictionnary->left, fileWithDic);
+		WriteAVLDictionnary(dictionnary->right, fileWithDic);
 	}
 }

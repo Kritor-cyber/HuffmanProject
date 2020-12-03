@@ -53,6 +53,8 @@ void AddNodeToListCharAndNbOcc(ListCharAndNbOcc** list, char c);
 */
 void AddCharToList(ListCharAndNbOcc** list, char c);
 
+void FreeList(ListCharAndNbOcc* list);
+
 /**
 * \brief Function that creates a characters and occurrences list from a file of characters.
 * \n Example :
