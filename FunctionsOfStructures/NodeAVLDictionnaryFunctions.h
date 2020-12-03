@@ -36,30 +36,50 @@ int _AVLBalanceFactor(NodeAVLDictionnary* tree);
 
 /**
  * \brief Function to do a right rotation on an AVL.
+ *		\n Example :
+ *		\code{.c}
+ *		_AVLRightRotation(&tree);
+ *		\endcode
  * \param tree is a pointer on an AVL.
  */
 void _AVLRightRotation(NodeAVLDictionnary** tree);
 
 /**
  * \brief Function to do a left rotation on an AVL.
+ *		\n Example :
+ *		\code{.c}
+ *		_AVLLeftRotation(&tree);
+ *		\endcode
  * \param tree is a pointer on an AVL.
  */
 void _AVLLeftRotation(NodeAVLDictionnary** tree);
 
 /**
  * \brief Function to balance an AVL.
+ *		\n Example :
+ *		\code{.c}
+ *		AVLBalance(&tree);
+ *		\endcode
  * \param tree is a pointer on an AVL.
  */
 void AVLBalance(NodeAVLDictionnary** tree);
 
 /**
  * \brief Function to print an AVL.
+ *		\n Example :
+ *		\code{.c}
+ *		PrintNodeAVLDictionnary(tree);
+ *		\endcode
  * \param tree is a pointer on an AVL.
  */
 void PrintNodeAVLDictionnary(NodeAVLDictionnary* tree);
 
 /**
  * \brief Function to free an AVL.
+ *		\n Example :
+ *		\code{.c}
+ *		FreeNodeAVLDictionnary(tree);
+ *		\endcode
  * \param tree is a pointer on an AVL.
  */
 void FreeNodeAVLDictionnary(NodeAVLDictionnary* tree);
