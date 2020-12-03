@@ -22,7 +22,7 @@ typedef struct ListCharAndNbOcc
 * \brief Function for creating a node pointing at a character, its occurence and a next node. 
 * \n Example :
 * \code{.c}
-* CreateNode('c', 'nbOcc');
+* CreateNode('c', entier);
 * \endcode
 * \param c is the character.
 * \param nbOcc is the number of occurences.
@@ -35,7 +35,7 @@ ListCharAndNbOcc* CreateNode(char c, int nbOcc);
 * \brief Function for adding a new node to the characters and occurences list.
 * \n Example :
 * \code{.c}
-* AddNodeToListCharAndNbOcc(list, 'c');
+* AddNodeToListCharAndNbOcc(&list, 'c');
 * \endcode
 * \param list is the list to which the new node is added.
 * \param c is the new character added of occurence equals 1.
@@ -46,7 +46,7 @@ void AddNodeToListCharAndNbOcc(ListCharAndNbOcc** list, char c);
 * \brief Function incrementing the occurence of a listed character or adding a node for a new one to the list.
 * \n Example :
 * \code{.c}
-* AddCharToList(list, 'c');
+* AddCharToList(&list, 'c');
 * \endcode
 * \param list is the list where the occurence is incremented or a node for a new character is created .
 * \param c is the character added to the list or whose occurrence is incremented if already listed.

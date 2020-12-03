@@ -34,7 +34,7 @@ ListHuffman* CreateNodeListHuffman(NodeHuffman* data);
 * \brief Function that adds a new node to the Huffman list.
 * \n Example :
 * \code{.c}
-* AddToListHuffman(list, nodeToAdd);
+* AddToListHuffman(&list, nodeToAdd);
 * \endcode
 * \param list ist the Huffman list to which the nodeToAdd is added.
 * \param nodeToAdd is the node to add to the Huffman list.
