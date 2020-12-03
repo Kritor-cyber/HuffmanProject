@@ -37,10 +37,10 @@ BinaryFile* OpenBinaryFile(char* path, char* mode);
 * \brief Function that converts and writes a character's binary form in a file.
 * \n Example :
 * \code{.c}
-* WriteCharIntoBinaryFile(file,"character");
+* WriteCharIntoBinaryFile(file,'a');
 * \endcode
 * \param file is the file where the binary version of the character will be written.
-* \param character is the parameter converted into a binary version.
+* \param charToWrite is the parameter converted into a binary version.
 */
 void WriteCharIntoBinaryFile(BinaryFile* file, char charToWrite);
 
@@ -62,7 +62,7 @@ void WriteFakeBitsIntoBinaryFile(BinaryFile* file, char* bitsCode);
 * WriteFakeBitIntoBinaryFile(file, bit);
 * \endcode
 * \param file is the file where the "fake" bit will be written.
-* \param bit is the "fake" bit that will be written in the file.
+* \param fakeBit is the "fake" bit that will be written in the file.
 */
 void WriteFakeBitIntoBinaryFile(BinaryFile* file, char fakeBit);
 
@@ -104,6 +104,6 @@ char GetFakeBitFromBinaryFile(BinaryFile* file);
 * \code{.c}
 * CloseBinaryFile(file);
 * \endcode
-* \param file is the file to close and deallocate the memory from.
+* \param fileToClose is the file to close and deallocate the memory from.
 */
 void CloseBinaryFile(BinaryFile* fileToClose);
