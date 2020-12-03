@@ -38,7 +38,7 @@ NodeHuffman* CreateNodeHuffmanFromChar(char c);
  * \brief Function to create a Huffman tree with a list.
  *		\n Example :
  *		\code{.c}
- *		NodeHuffman* tree = CreateHuffmanTree(pointerOnTheListToUse);
+ *		NodeHuffman* tree = CreateHuffmanTree(list);
  *		\endcode
  * \param list is the pointer on the list used to create the Huffman tree.
  * \return a NodeHuffman pointer on the root of the Huffman tree if the tree could be created.
@@ -50,7 +50,7 @@ NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc* list);
  * \brief Function to create a NodeHuffman from a list.
  *		\n Example :
  *		\code{.c}
- *		NodeHuffman* node = NodeHuffmanFromNodeCharAndNbOcc(pointerOntheListToUse);
+ *		NodeHuffman* node = NodeHuffmanFromNodeCharAndNbOcc(list);
  *		\endcode
  * \param list is the pointer on the list used to create the NodeHuffman.
  * \return a NodeHuffman pointer if the NodeHuffman could be created.
@@ -62,7 +62,7 @@ NodeHuffman* NodeHuffmanFromNodeCharAndNbOcc(ListCharAndNbOcc* list);
  * \brief Function to add a NodeHuffman in an array.
  *		\n Example :
  *		\code{.c}
- *		AddNodeHuffmanInArray(doublePointerOnArray, sizeArray, charOfNodeToAdd, posToAdd);
+ *		AddNodeHuffmanInArray(array, sizeArray, charOfNodeToAdd, position);
  *		\endcode
  * \param array is the double pointer on the array to modify.
  * \param arrSize is the size of the array.
@@ -101,7 +101,7 @@ NodeHuffman** _CreateArrayOfNodeHuffmanWithNbOccFromFile(char* pathOfFile, int* 
  * \brief Function to create a Huffman tree from an array.
  *		\n Example :
  *		\code{.c}
- *		NodeHuffman* tree = CreateHuffmanTreeFromArray(doublePointerOnArray, sizeArray);
+ *		NodeHuffman* tree = CreateHuffmanTreeFromArray(array, sizeArray);
  *		\endcode
  * \param array is a double pointer on the array to use to create the Huffman tree.
  * \param size is the size of the array use to create the Hufffman tree.
@@ -114,7 +114,7 @@ NodeHuffman* CreateHuffmanTreeFromArray(NodeHuffman** array, int size);
  * \brief Function to create a NodeHuffman with the character, the number of occurrence, the left and the right child.
  *		\n Example :
  *		\code{.c}
- *		NodeHuffman* node = CreateNodeHuffmanFromCharAndNbOccAndChilds(charToUse, nbOccToUse, pointerLeftChild, pointerRightChild);
+ *		NodeHuffman* node = CreateNodeHuffmanFromCharAndNbOccAndChilds(charToUse, nbOcc, pointerLeftChild, pointerRightChild);
  *		\endcode
  * \param car is the character to use when creating the NodeHuffman.
  * \param nbOcc is the number of occurrence to use when creating the NodeHuffman.
