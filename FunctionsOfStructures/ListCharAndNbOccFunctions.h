@@ -14,7 +14,7 @@
   *		\code{.c}
   *		int SumOcc = GetNbOccSum(list);
   *		\endcode
-  * \param list is a pointer on a list.
+  * \param list is a pointer on a list where it calculates the sum of occurrence.
   * \return the sum of occurrence in the list.
   * \return 0 if the list is NULL.
   */
@@ -26,7 +26,7 @@ int	GetNbOccSum(ListCharAndNbOcc* list);
  *		\code{.c}
  *		SortListCharAndNbOccCroissant(&list);
  *		\endcode
- * \param list is a double pointer on a list.
+ * \param list is a double pointer on a list, will be sorted from smaller to greater number of occurrence afterward.
  */
 void SortListCharAndNbOccCroissant(ListCharAndNbOcc** list);
 
@@ -38,7 +38,7 @@ static void _SortListCharAndNbOccCroissant(ListCharAndNbOcc** list);
  *		\code{.c}
  *		PrintList(list);
  *		\endcode
- * \param list is a pointer on a list.
+ * \param list is a pointer on a list that will be printed on the console.
  */
 void PrintList(ListCharAndNbOcc* list);
 
@@ -47,7 +47,8 @@ void PrintList(ListCharAndNbOcc* list);
  *		\n Example :
  *		\code{.c}
  *		FreeList(list);
+ *		list = NULL;
  *		\endcode
- * \param list is a pointer on a list.
+ * \param list is the pointer on the list to free, set it to NULL afterward to free cleanly the list.
  */
 void FreeList(ListCharAndNbOcc* list);

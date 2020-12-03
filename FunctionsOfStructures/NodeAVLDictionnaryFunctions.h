@@ -16,7 +16,7 @@
   *		\code{.c}
   *		int depth = _AVLDepth(tree);
   *		\endcode
-  * \param tree is a pointer on an AVL.
+  * \param tree is a pointer on the AVL where it search the depth.
   * \return the depth of the AVL.
   * \return -1 if the AVL is NULL.
   */
@@ -28,7 +28,7 @@ int _AVLDepth(NodeAVLDictionnary* tree);
  *		\code{.c}
  *		int balanceFactor = _AVLBalanceFactor(tree);
  *		\endcode
- * \param tree is a pointer on an AVL.
+ * \param tree is a pointer on the AVL where it calculates the balance factor.
  * \return the balance factor of the AVL.
  * \return 0 if the AVL is NULL.
  */
@@ -40,7 +40,7 @@ int _AVLBalanceFactor(NodeAVLDictionnary* tree);
  *		\code{.c}
  *		_AVLRightRotation(&tree);
  *		\endcode
- * \param tree is a pointer on an AVL.
+ * \param tree is a double pointer on the AVL where it does a right rotation.
  */
 void _AVLRightRotation(NodeAVLDictionnary** tree);
 
@@ -50,7 +50,7 @@ void _AVLRightRotation(NodeAVLDictionnary** tree);
  *		\code{.c}
  *		_AVLLeftRotation(&tree);
  *		\endcode
- * \param tree is a pointer on an AVL.
+ * \param tree is a pointer on the AVL where it does a left rotation.
  */
 void _AVLLeftRotation(NodeAVLDictionnary** tree);
 
@@ -60,7 +60,7 @@ void _AVLLeftRotation(NodeAVLDictionnary** tree);
  *		\code{.c}
  *		AVLBalance(&tree);
  *		\endcode
- * \param tree is a pointer on an AVL.
+ * \param tree is a pointer on the AVL it will balances.
  */
 void AVLBalance(NodeAVLDictionnary** tree);
 
@@ -70,7 +70,7 @@ void AVLBalance(NodeAVLDictionnary** tree);
  *		\code{.c}
  *		PrintNodeAVLDictionnary(tree);
  *		\endcode
- * \param tree is a pointer on an AVL.
+ * \param tree is a pointer on an AVL that will be printed on the console.
  */
 void PrintNodeAVLDictionnary(NodeAVLDictionnary* tree);
 
@@ -79,7 +79,8 @@ void PrintNodeAVLDictionnary(NodeAVLDictionnary* tree);
  *		\n Example :
  *		\code{.c}
  *		FreeNodeAVLDictionnary(tree);
+ *		tree = NULL;
  *		\endcode
- * \param tree is a pointer on an AVL.
+ * \param tree is the pointer on the AVL tree to free, set it to NULL afterward to free cleanly the tree.
  */
 void FreeNodeAVLDictionnary(NodeAVLDictionnary* tree);
