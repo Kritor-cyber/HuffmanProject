@@ -106,7 +106,8 @@ void StartMenu()
 			break;
 		}
 
-		Pause();
+		if (choice != 4)
+			Pause();
 	}
 }
 

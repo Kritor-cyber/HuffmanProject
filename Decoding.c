@@ -112,7 +112,6 @@ void DecodeCompressedFileWithIntegratedTree(char* pathToTheFileToDecode, char* p
 					}
 					else if (tmpHuffmanTree->nbOcc != 0)
 					{
-						printf("fin du fichier\n");
 						end = 1;
 					}
 				}
