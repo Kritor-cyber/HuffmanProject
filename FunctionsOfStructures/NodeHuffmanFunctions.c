@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void _WriteDictionnary(NodeHuffman* tree, const char* code, FILE *dic)
+static void _WriteDictionnary(NodeHuffman* tree, const char* code, FILE *dic)
 {
 	if (tree->c != '\0')
 	{
@@ -105,8 +105,8 @@ void FreeHuffmanTree(NodeHuffman* tree)
 		free(tree);
 	}
 }
-
-int IsSuperior(const NodeHuffman** noeud1, const NodeHuffman** noeud2)
+ 
+static int IsSuperior(const NodeHuffman** noeud1, const NodeHuffman** noeud2)
 {
 	if ((*noeud1)->nbOcc < (*noeud2)->nbOcc) return -1;
 	if ((*noeud1)->nbOcc > (*noeud2)->nbOcc) return 1;

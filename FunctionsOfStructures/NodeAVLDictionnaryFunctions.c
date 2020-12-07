@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int _AVLDepth(NodeAVLDictionnary* tree)
+static int _AVLDepth(NodeAVLDictionnary* tree)
 {
 	if (tree == NULL) return -1;
 	int h1 = _AVLDepth(tree->left), h2 = _AVLDepth(tree->right);
@@ -15,7 +15,7 @@ int _AVLDepth(NodeAVLDictionnary* tree)
 	return h2 + 1;
 }
 
-int _AVLBalanceFactor(NodeAVLDictionnary* tree)
+static int _AVLBalanceFactor(NodeAVLDictionnary* tree)
 {
 	if (tree == NULL)
 		return 0;
@@ -23,7 +23,7 @@ int _AVLBalanceFactor(NodeAVLDictionnary* tree)
 	return _AVLDepth(tree->right) - _AVLDepth(tree->left);
 }
 
-void _AVLRightRotation(NodeAVLDictionnary** tree)
+static void _AVLRightRotation(NodeAVLDictionnary** tree)
 {
 	if (*tree != NULL)
 	{
@@ -35,7 +35,7 @@ void _AVLRightRotation(NodeAVLDictionnary** tree)
 	}
 }
 
-void _AVLLeftRotation(NodeAVLDictionnary** tree)
+static void _AVLLeftRotation(NodeAVLDictionnary** tree)
 {
 	if (*tree != NULL)
 	{

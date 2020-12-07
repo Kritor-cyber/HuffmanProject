@@ -35,7 +35,7 @@ void AddNodeInNodeDictionnary(NodeAVLDictionnary** dic, char c, char* code)
 	}
 }
 
-NodeAVLDictionnary* CreerAVLDictionnaire(NodeHuffman* tree)
+NodeAVLDictionnary* CreateAVLDictionnary(NodeHuffman* tree)
 {
 	if (tree == NULL)
 	{
@@ -69,18 +69,18 @@ NodeAVLDictionnary* CreerAVLDictionnaire(NodeHuffman* tree)
 	else
 	{
 		code[0] = '\0';
-		_CreerAVLDictionnaire(tree, code, 1, &nodeAVLDictionnary);
+		_CreateAVLDictionnary(tree, code, 1, &nodeAVLDictionnary);
 		AVLBalance(&nodeAVLDictionnary);
 	}
 
 	return nodeAVLDictionnary;
 }
 
-void _CreerAVLDictionnaire(NodeHuffman* actualNode, char* code, int codeSize, NodeAVLDictionnary** tree)
+void _CreateAVLDictionnary(NodeHuffman* actualNode, char* code, int codeSize, NodeAVLDictionnary** tree)
 {
 	if (actualNode == NULL)
 	{
-		printf("The node must be not NULL\n");
+		printf("The node must not be NULL\n");
 	}
 	else
 	{
@@ -123,7 +123,7 @@ void _CreerAVLDictionnaire(NodeHuffman* actualNode, char* code, int codeSize, No
 						if (actualNode->left != NULL)
 						{
 							newCode[codeSize - 2] = '0';
-							_CreerAVLDictionnaire(actualNode->left, newCode, codeSize, tree);
+							_CreateAVLDictionnary(actualNode->left, newCode, codeSize, tree);
 						}
 						else
 							printf("This should never happened (in _CreerAVLDictionnaire in NodeAVLDictionnary.c, the first)\n");
@@ -131,7 +131,7 @@ void _CreerAVLDictionnaire(NodeHuffman* actualNode, char* code, int codeSize, No
 						if (actualNode->right != NULL)
 						{
 							newCode2[codeSize - 2] = '1';
-							_CreerAVLDictionnaire(actualNode->right, newCode2, codeSize, tree);
+							_CreateAVLDictionnary(actualNode->right, newCode2, codeSize, tree);
 						}
 						else
 							printf("This should never happened (in _CreerAVLDictionnaire in NodeAVLDictionnary.c, the second)\n");
