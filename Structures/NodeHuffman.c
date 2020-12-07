@@ -381,7 +381,7 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryIntegratedInFile(BinaryFile* binary
 		if (firstC == '\0')
 			firstC = c;
 		int size = GetCharFromBinaryFile(binaryFileWithDictionnary);
-		char* code = (char*)malloc(sizeof(char) * (size + 1));
+		char* code = (char*)malloc(sizeof(char) * (size+1));
 		if (code == NULL)
 		{
 			printf("Can't allocate memory to code in CreateHuffmanTreeFromDictionnaryIntegratedInFile() in NodeHuffman.c\n");

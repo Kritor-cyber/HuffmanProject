@@ -39,21 +39,21 @@ void SortListCharAndNbOccCroissant(ListCharAndNbOcc** list)
 
 static void _SortListCharAndNbOccCroissant(ListCharAndNbOcc** list)
 {
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
-		return 0;
-
-	ListCharAndNbOcc* chr = *list;
-
-	if (chr->nbOcc > chr->next->nbOcc)
+	if (list != NULL && *list != NULL && (*list)->next != NULL)
 	{
-		ListCharAndNbOcc* temp = chr->next;
-		chr->next = chr->next->next;
-		temp->next = chr;
-		*list = temp;
-		chr = *list;
-	}
+		ListCharAndNbOcc* chr = *list;
 
-	_SortListCharAndNbOccCroissant(&(chr->next));
+		if (chr->nbOcc > chr->next->nbOcc)
+		{
+			ListCharAndNbOcc* temp = chr->next;
+			chr->next = chr->next->next;
+			temp->next = chr;
+			*list = temp;
+			chr = *list;
+		}
+
+		_SortListCharAndNbOccCroissant(&(chr->next));
+	}
 }
 
 void PrintList(ListCharAndNbOcc* list)

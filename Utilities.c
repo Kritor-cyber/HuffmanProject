@@ -1,6 +1,6 @@
 #include "Utilities.h"
 
-#include "Structures/ListCharAndNbOcc.h"
+#include "FunctionsOfStructures/ListCharAndNbOccFunctions.h"
 #include <stdlib.h>
 #include <string.h>
 
