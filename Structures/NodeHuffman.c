@@ -148,8 +148,6 @@ NodeHuffman** CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab)
 	else
 	{
 		char car;
-		//int start, end, mid, found;
-		//int tabOcc[256] = { 0 };
 		*sizeTab = 0;
 
 		while ((car = fgetc(f)) != EOF)
@@ -341,7 +339,7 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 		else
 		{
 			NodeHuffman* tree = NULL;
-			char c;// , oldC = '\0';// , size;
+			char c;
 
 			while ((c = fgetc(dic)) != EOF)
 			{
@@ -374,7 +372,7 @@ NodeHuffman* CreateHuffmanTreeFromDictionnaryFile(char* dicPath)
 NodeHuffman* CreateHuffmanTreeFromDictionnaryIntegratedInFile(BinaryFile* binaryFileWithDictionnary)
 {
 	NodeHuffman* tree = NULL;
-	char c, firstC = '\0';// , size;
+	char c, firstC = '\0';
 
 	while ((c = GetCharFromBinaryFile(binaryFileWithDictionnary)) != firstC)
 	{

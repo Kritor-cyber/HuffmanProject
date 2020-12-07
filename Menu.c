@@ -63,7 +63,7 @@ char* GetStringFromUser(const char* msg)
 	else
 	{
 		printf("%s", msg);
-		if (scanf_s("%[^\n]", userString, 32) == 0) //%[^ \n] premet de récupérer tous les caractères sauf le retour à la ligne
+		if (scanf_s("%[^\n]", userString, 32) == 0) //%[^ \n] let us get all characters except the return ('\n')
 		{
 			printf("The text you entered is too long, you can't put more than 32 characters.\n");
 		}
@@ -119,7 +119,7 @@ static void CleanInputBuffer()
 static void Pause()
 {
 	printf("Press Enter to continue...");
-	getchar(); // il y a un warning mais la valeur de retour ne nous intéresse pas
+	getchar(); // there is a warning but we don't care of the return value
 }
 
 void CompressFile()
@@ -137,7 +137,6 @@ void CompressFile()
 			{
 				if (DEBUG) printf("The path of the compressed file : %s\n", pathOfFileCompressed);
 				
-				// Compression du fichier
 				printf("Encoding %s\n", pathOfFileToCompress);
 
 				NodeHuffman** tabTmp = NULL;

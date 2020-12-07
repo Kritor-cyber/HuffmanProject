@@ -101,8 +101,8 @@ void _CreateAVLDictionnary(NodeHuffman* actualNode, char* code, int codeSize, No
 			else
 			{
 				errno_t err = strcpy_s(newCode, codeSize, code);
-				// Si on copie le code et que l'on ne l'utilise plus, alors on le supprime
 				free(code);
+
 				if (err)
 				{
 					printf("failed to copy the code %s (error code : %d)\n", code, err);

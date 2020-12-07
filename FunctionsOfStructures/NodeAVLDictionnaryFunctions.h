@@ -8,8 +8,6 @@
  */
 #include "../Structures/NodeAVLDictionnary.h"
 
-// Functions used to equilibrate the AVL
-
  /**
   * \brief Function which return the depth of an AVL.
   *		\n Example :
