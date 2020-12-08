@@ -26,7 +26,7 @@ typedef struct ListHuffman
 * CreateNodeListHuffman(data);
 * \endcode
 * \param data is the information to put inside the Huffman list node.
-* \return the node.
+* \return the node newly created.
 */
 ListHuffman* CreateNodeListHuffman(NodeHuffman* data);
 
@@ -36,7 +36,7 @@ ListHuffman* CreateNodeListHuffman(NodeHuffman* data);
 * \code{.c}
 * AddToListHuffman(&list, nodeToAdd);
 * \endcode
-* \param list ist the Huffman list to which the nodeToAdd is added.
+* \param list is the Huffman list to which the nodeToAdd is added.
 * \param nodeToAdd is the node to add to the Huffman list.
 */
 void AddToListHuffman(ListHuffman** list, NodeHuffman* nodeToAdd);

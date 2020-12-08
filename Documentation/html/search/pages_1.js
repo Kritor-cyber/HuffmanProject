@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['huffman_20project_193',['Huffman Project',['../index.html',1,'']]]
+  ['huffmanproject_193',['HuffmanProject',['../md__r_e_a_d_m_e.html',1,'']]]
 ];

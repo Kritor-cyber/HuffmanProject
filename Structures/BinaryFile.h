@@ -29,7 +29,7 @@ typedef struct BinaryFile
 * \param path is the path to the binary file.
 * \param mode is the mode of opening the binary file.
 * \return the binary file.
-* \return \c an error message if path to file can't be opened.	
+* \return an error message if path to file can't be opened.	
 */
 BinaryFile* OpenBinaryFile(char* path, char* mode);
 
@@ -83,7 +83,7 @@ void ForceWriteBits(BinaryFile* file);
 * GetCharFromBinaryFile(file);
 * \endcode
 * \param file is the file the character will get pulled from.
-* \return a character.
+* \return the character read bit per bit.
 */
 char GetCharFromBinaryFile(BinaryFile* file);
 
@@ -94,7 +94,7 @@ char GetCharFromBinaryFile(BinaryFile* file);
 * GetFakeBitFromBinaryFile(file)
 * \endcode
 * \param file is the file the bit will get pulled from.
-* \return a bit.
+* \return the last bit read.
 */
 char GetFakeBitFromBinaryFile(BinaryFile* file);
 

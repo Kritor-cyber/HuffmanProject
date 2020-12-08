@@ -40,7 +40,7 @@ void AddNodeInNodeDictionnary(NodeAVLDictionnary** dic, char c, char* code);
 * CreateAVLDictionnaire(tree);
 * \endcode
 * \param tree is the Huffman tree we are using to create the AVL Dictionnary .
-* \return an AVL Dictionnary node.
+* \return the newly created \c NodeAVLDictionnary
 */
 NodeAVLDictionnary* CreateAVLDictionnary(NodeHuffman* tree);
 
