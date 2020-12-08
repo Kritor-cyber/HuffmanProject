@@ -56,7 +56,7 @@ void AddDataInQueue(QueueNodeHuffman* queue, NodeHuffman* data);
  * NodeHuffman* node = GetDataFromQueueNodeHuffman(myQueue);
  * \endcode
  * \param queue is a pointer to the \c QueueNodeHuffman we want the first data.
- * \return is the first data of the \c queue
+ * \return the first data of the \c queue
  */
 NodeHuffman* GetDataFromQueueNodeHuffman(QueueNodeHuffman* queue);
 

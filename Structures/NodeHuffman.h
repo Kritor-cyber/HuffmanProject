@@ -29,7 +29,7 @@ typedef struct NodeHuffman
  *		NodeHuffman* node = CreateNodeHuffmanFromChar(charToUse);
  *		\endcode
  * \param c is the character to use when creating the NodeHuffman.
- * \return the NodeHuffman's pointer if the NodeHuffman is created.
+ * \return the \c NodeHuffman's pointer if the NodeHuffman is created.
  * \return \c NULL if the NodeHuffman could not be created.
  */
 NodeHuffman* CreateNodeHuffmanFromChar(char c);
@@ -41,7 +41,7 @@ NodeHuffman* CreateNodeHuffmanFromChar(char c);
  *		NodeHuffman* tree = CreateHuffmanTree(list);
  *		\endcode
  * \param list is the pointer on the list used to create the Huffman tree.
- * \return a NodeHuffman pointer on the root of the Huffman tree if the tree could be created.
+ * \return a \c NodeHuffman pointer on the root of the Huffman tree if the tree could be created.
  * \return \c NULL if the Huffman tree could not be created.
  */
 NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc* list);
@@ -53,7 +53,7 @@ NodeHuffman* CreateHuffmanTree(ListCharAndNbOcc* list);
  *		NodeHuffman* node = NodeHuffmanFromNodeCharAndNbOcc(list);
  *		\endcode
  * \param list is the pointer on the list used to create the NodeHuffman.
- * \return a NodeHuffman pointer if the NodeHuffman could be created.
+ * \return a \c NodeHuffman pointer if the NodeHuffman could be created.
  * \return \c NULL if the NodeHuffman could not be created.
  */
 NodeHuffman* NodeHuffmanFromNodeCharAndNbOcc(ListCharAndNbOcc* list);
@@ -79,7 +79,7 @@ void AddNodeHuffmanInArray(NodeHuffman** array, int arrSize, char car, int pos);
  *		\endcode
  * \param f is a pointer on the file to use to create the array.
  * \param SizeTab is the size of the array created.
- * \return a double pointer on a NodeHuffman if the array could be created.
+ * \return a double pointer on a \c NodeHuffman if the array could be created.
  * \return \c NULL if the array could not be created.
  */
 NodeHuffman** CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab);
@@ -92,7 +92,7 @@ NodeHuffman** CreateArrayOfNodeHuffmanWithNbOccFromFile(FILE* f, int* sizeTab);
  *		\endcode
  * \param pathOfFile is a pointer to the string of the path to the file.
  * \param sizeTab is a pointer to an int of the size of the array.
- * \return a double pointer on a NodeHuffman if the array could be created.
+ * \return a double pointer on a \c NodeHuffman if the array could be created.
  * \return \c NULL if the array could not be created.
  */
 NodeHuffman** _CreateArrayOfNodeHuffmanWithNbOccFromFile(char* pathOfFile, int* sizeTab);

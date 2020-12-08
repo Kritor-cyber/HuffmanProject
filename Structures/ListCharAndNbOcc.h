@@ -26,8 +26,8 @@ typedef struct ListCharAndNbOcc
 * \endcode
 * \param c is the character.
 * \param nbOcc is the number of occurences.
-* \return node.
-* \return \c an error message if the node is NULL.
+* \return the node newly created.
+* \return an error message if the node is \c NULL.
 */
 ListCharAndNbOcc* CreateNode(char c, int nbOcc);
 
@@ -63,6 +63,6 @@ void FreeList(ListCharAndNbOcc* list);
 * \endcode
 * \param path is the path to the file .
 * \return list of characters and occurences.
-* \return \c an error message if path to file can't be opened..
+* \return an error message if path to file can't be opened..
 */
 ListCharAndNbOcc* GetListCharAndNbOccFromFile(char* path);
