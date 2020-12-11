@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['right_184',['right',['../struct_node_huffman.html#a6fc9e1298ec96c4c279c2b2e5ed43440',1,'NodeHuffman']]]
+  ['right_185',['right',['../struct_node_huffman.html#aaa548a434dc8767396f722e4cb024628',1,'NodeHuffman']]]
 ];

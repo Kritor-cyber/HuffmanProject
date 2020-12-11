@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['size_185',['size',['../struct_queue_node_huffman.html#a439227feff9d7f55384e8780cfc2eb82',1,'QueueNodeHuffman']]]
+  ['size_186',['size',['../struct_queue_node_huffman.html#a8853110722afe45a7bfb7c6816ea4393',1,'QueueNodeHuffman']]]
 ];
