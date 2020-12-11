@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['queuenodehuffman_2eh_112',['QueueNodeHuffman.h',['../_queue_node_huffman_8h.html',1,'']]]
+  ['queuenodehuffman_2eh_113',['QueueNodeHuffman.h',['../_queue_node_huffman_8h.html',1,'']]]
 ];
